@@ -1,15 +1,25 @@
-import express, { Request, Response } from 'express'
-import { sampleProducts } from './data'
+import express from 'express'
+
 import cors from 'cors'
+import dotenv from 'dotenv'
+import mongoose from 'mongoose'
+import { productRouter } from './routers/productRouter'
+import { seedRouter } from './routers/seedRouter'
+
+dotenv.config()
+
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/webstore'
+mongoose.set('strictQuery', true)
+mongoose
+  .connect(MONGODB_URI)
+  .then(() => {
+    console.log('connected to mongodb')
+  })
+  .catch(() => {
+    console.log('error mongodb')
+  })
 
 const app = express()
-// app.use(
-//   cors({
-//     credentials: true,
-//     origin: ['http://localhost:5173'],
-//   })
-// )
-
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*')
   next()
@@ -19,9 +29,9 @@ app.use((req, res, next) => {
   })
 })
 
-app.get('/api/products', (req: Request, res: Response) => {
-  res.json(sampleProducts)
-})
+app.use('/api/products', productRouter)
+app.use('/api/seed', seedRouter)
+
 const PORT = 4000
 app.listen(PORT, () => {
   console.log(`server started at http://localhost:${PORT}`)

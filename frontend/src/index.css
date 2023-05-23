@@ -10,5 +10,13 @@
 .product-image {
   max-width: 400px;
   width: 100%;
-  height: 20rem;
+  max-height: 20rem;
+}
+
+.rating span {
+  color: #ffc000;
+}
+
+img.large {
+  max-width: 100%;
 }
