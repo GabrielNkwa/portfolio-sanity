@@ -9,13 +9,12 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "framer-motion": "^10.12.16",
-    "node-sass": "^9.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.9.0",
-    "react-scripts": "5.0.1",
+    "react-scripts": "^3.0.1",
     "react-tooltip": "^5.15.0",
-    "sanity": "^3.12.2",
+    "sanity": "^2.36.6",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -41,5 +40,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "sass": "^1.89.0"
   }
 }
