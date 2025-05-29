@@ -12,7 +12,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.9.0",
-    "react-scripts": "^3.0.1",
+    "react-scripts": "^5.0.1",
     "react-tooltip": "^5.15.0",
     "sanity": "^2.36.6",
     "web-vitals": "^2.1.4"
@@ -42,6 +42,7 @@
     ]
   },
   "devDependencies": {
-    "sass": "^1.89.0"
+    "sass": "^1.89.0",
+    "sass-loader": "10"
   }
 }

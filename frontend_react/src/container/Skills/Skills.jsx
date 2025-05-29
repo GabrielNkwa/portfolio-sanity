@@ -4,7 +4,8 @@ import { Tooltip as ReactTooltip } from 'react-tooltip';
 
 import { AppWrap, MotionWrap } from '../../wrapper';
 import { urlFor, client } from '../../client';
-import './Skills.scss';
+// import './Skills.scss';
+import './Skills.css';
 
 const Skills = () => {
   const [experiences, setExperiences] = useState([]);

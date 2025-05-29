@@ -1,5 +1,6 @@
 import React from 'react';
-import './Header.scss';
+// import './Header.scss';
+import './Header.css';
 import { motion } from 'framer-motion';
 import { images } from '../../constants';
 import { AppWrap } from '../../wrapper';

@@ -4,21 +4,31 @@ import { motion } from 'framer-motion';
 
 import { AppWrap, MotionWrap } from '../../wrapper';
 import { urlFor, client } from '../../client';
-import './Work.scss';
+import './Work.css';
 
 const Work = () => {
   const [works, setWorks] = useState([]);
   const [filterWork, setFilterWork] = useState([]);
   const [activeFilter, setActiveFilter] = useState('All');
   const [animateCard, setAnimateCard] = useState({ y: 0, opacity: 1 });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const query = '*[_type == "works"]';
 
-    client.fetch(query).then((data) => {
-      setWorks(data);
-      setFilterWork(data);
-    });
+    client.fetch(query)
+      .then((data) => {
+        setWorks(data || []); // Ensure array even if null
+        setFilterWork(data || []);
+      })
+      .catch((err) => {
+        console.error('Failed to fetch works:', err);
+        setError('Failed to load projects');
+        setWorks([]);
+        setFilterWork([]);
+      })
+      .finally(() => setLoading(false));
   }, []);
 
   const handleWorkFilter = (item) => {
@@ -31,10 +41,16 @@ const Work = () => {
       if (item === 'All') {
         setFilterWork(works);
       } else {
-        setFilterWork(works.filter((work) => work.tags.includes(item)));
+        setFilterWork(works.filter((work) => 
+          work.tags?.includes(item) ?? false
+        ));
       }
     }, 500);
   };
+
+  if (loading) return <div className="app__loading">Loading...</div>;
+  if (error) return <div className="app__error">{error}</div>;
+  if (!filterWork.length) return <div className="app__empty">No projects found</div>;
 
   return (
     <>
@@ -105,7 +121,9 @@ const Work = () => {
               </p>
 
               <div className="app__work-tag app__flex">
-                <p className="p-text">{work.tags[0]}</p>
+                <p className="p-text">
+                  {work.tags?.[0] ?? 'No tags'} {/* Safe access */}
+                </p>
               </div>
             </div>
           </div>
