@@ -9,12 +9,6 @@ export default {
       type: 'string',
     },
     {
-      name: 'role',
-      title: 'Role',
-      type: 'string',
-      description: 'Job title, e.g. "Head of Operations"',
-    },
-    {
       name: 'company',
       title: 'Company',
       type: 'string',
@@ -30,8 +24,7 @@ export default {
     {
       name: 'feedback',
       title: 'Feedback',
-      type: 'text',
-      rows: 3,
+      type: 'string',
     },
   ],
 }

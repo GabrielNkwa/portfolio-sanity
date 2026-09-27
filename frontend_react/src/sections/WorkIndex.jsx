@@ -37,7 +37,7 @@ const CursorPreview = ({ work, x, y }) => {
 };
 
 // Every project as a large typographic row, filterable by Web and Mobile.
-const WorkIndex = ({ status, works = [], onRetry, onOpen }) => {
+const WorkIndex = ({ status, works = [], onRetry }) => {
   const [filter, setFilter] = useState('All');
   const [hovered, setHovered] = useState(null);
   const finePointer = useMediaQuery('(pointer: fine)');
@@ -105,15 +105,13 @@ const WorkIndex = ({ status, works = [], onRetry, onOpen }) => {
           );
           return (
             <m.li key={work.id} variants={item} onPointerEnter={() => setHovered(work)}>
-              <button
-                type="button"
-                className={styles.row}
-                onClick={() => onOpen(work)}
-                aria-haspopup="dialog"
-                aria-label={`${work.title}, project details`}
-              >
-                {inner}
-              </button>
+              {work.link ? (
+                <a className={styles.row} href={work.link} target="_blank" rel="noreferrer">
+                  {inner}
+                </a>
+              ) : (
+                <div className={styles.row}>{inner}</div>
+              )}
             </m.li>
           );
         })}

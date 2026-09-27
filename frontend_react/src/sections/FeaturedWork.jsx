@@ -1,7 +1,6 @@
 import React, { useLayoutEffect, useRef, useState } from 'react';
 import { m, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 
-import { track } from '../analytics';
 import { imageSrcSet, imageUrl } from '../data/portfolio';
 import { IconLink, Label, MediaFrame, SectionHeader, Skeleton, StatusMessage } from '../ui';
 import styles from './FeaturedWork.module.css';
@@ -26,13 +25,7 @@ const Slide = ({ work, index, active, onFocus }) => (
         <h3 className={styles.name}>{work.title}</h3>
         {work.description && <p className={styles.desc}>{work.description}</p>}
       </div>
-      {work.link && (
-        <IconLink
-          href={work.link}
-          label={`Open ${work.title}`}
-          onClick={() => track('project_visit', { project: work.title, from: 'featured' })}
-        />
-      )}
+      {work.link && <IconLink href={work.link} label={`Open ${work.title}`} />}
     </div>
   </li>
 );

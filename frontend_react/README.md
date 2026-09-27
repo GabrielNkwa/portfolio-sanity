@@ -20,7 +20,6 @@ The site runs at http://localhost:3000. `pnpm dev` also serves `/api/contact` th
 | --- | --- | --- |
 | `VITE_SANITY_PROJECT_ID` | build | Optional. Defaults to `rm2ky6he`. |
 | `SANITY_WRITE_TOKEN` | Vercel and local `.env` | Editor token used only by `api/contact.js`. |
-| `VITE_BOOKING_URL` | build | Optional. Booking link for the "Book a 20-min call" buttons; the buttons are hidden when it's empty. |
 
 Anything prefixed `VITE_` is bundled into the browser JavaScript. Never give a secret that prefix.
 
@@ -55,16 +54,6 @@ To change which projects lead the page, edit `PRIORITY` in `src/data/portfolio.j
 Run `pnpm dev` and open http://localhost:3000/styleguide.html to see every component and state. The style guide is not part of the production build.
 
 Framer Motion animations respect the OS reduced-motion setting through `<MotionConfig reducedMotion="user">` in `main.jsx`.
-
-## Content for business clients
-
-- **Case studies**: in Sanity, open a project and use the **Case study** tab (client, year, role, problem, what I built, result number and label, "Feature in case studies"). A case study appears once problem, what I built and result number are filled in. Featured ones (up to three) show in the Results section; any project with a case study shows it in the project dialog.
-- **Testimonials**: Sanity → Testimonials (name, role, company, feedback). The first two are shown.
-- **Placeholders**: `src/data/placeholders.js` fills missing case studies, a second testimonial and the booking link *in dev only*, each marked with a striped PLACEHOLDER badge. Production builds contain none of it; sections without real content are hidden instead.
-
-## Analytics
-
-`src/analytics.js` loads Vercel Web Analytics. Enable it in the Vercel project (Analytics tab) to get page views. Custom events (`contact_submit`, `booking_click`, `project_open`, `project_visit`) are recorded on Vercel's Pro plan; on Hobby they're ignored. To use another provider, change the two functions in that file.
 
 ## Deploy
 

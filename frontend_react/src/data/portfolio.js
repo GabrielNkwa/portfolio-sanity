@@ -2,18 +2,10 @@ import { startTransition, useCallback, useEffect, useState } from 'react';
 
 import { fetchQuery, urlFor } from '../client';
 import { fixText, normalizeTags, withProtocol, workKind } from './normalize';
-import * as placeholders from './placeholders';
-
-// Placeholder content renders in dev only; Vite replaces this with `false` in production builds.
-const USE_PLACEHOLDERS = import.meta.env.DEV;
 
 // One request for the whole page.
 const QUERY = `{
-  "works": *[_type == "works"]{
-    _id, title, description, projectLink, codeLink, tags, imgUrl,
-    featured, client, year, role, problem, solution, resultValue, resultLabel
-  },
-  "testimonials": *[_type == "testimonials"] | order(_createdAt asc){ _id, name, role, company, feedback },
+  "works": *[_type == "works"]{ _id, title, description, projectLink, codeLink, tags, imgUrl },
   "abouts": *[_type == "abouts"] | order(_createdAt asc){ _id, title, description, imgUrl },
   "experiences": *[_type == "experiences"] | order(year desc){ _id, year, works[]{ _key, name, company, desc } },
   "skills": *[_type == "skills"] | order(_createdAt asc){ _id, name }
@@ -68,25 +60,6 @@ const companyName = (value) => {
   return name.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase()).replace(/\bIct\b/, 'ICT');
 };
 
-// A case study needs a problem, what was built, and a result.
-const caseStudyFrom = (work, title) => {
-  if (work.problem && work.solution && work.resultValue) {
-    return {
-      client: fixText(work.client) || title,
-      year: work.year || null,
-      role: fixText(work.role),
-      problem: fixText(work.problem),
-      solution: fixText(work.solution),
-      resultValue: fixText(work.resultValue),
-      resultLabel: fixText(work.resultLabel),
-      featured: Boolean(work.featured),
-      placeholder: false,
-    };
-  }
-  const draft = USE_PLACEHOLDERS && placeholders.CASE_STUDIES[title];
-  return draft ? { ...draft, featured: true, placeholder: true } : null;
-};
-
 const toWork = (work) => {
   const title = fixText(work.title);
   const tags = normalizeTags(work.tags);
@@ -106,31 +79,13 @@ const toWork = (work) => {
   };
 };
 
-const withCaseStudy = (work, raw) => ({ ...work, caseStudy: caseStudyFrom(raw, work.title) });
-
 const rank = (work) => {
   const i = PRIORITY.indexOf(work.title);
   return i === -1 ? PRIORITY.length : i;
 };
 
 export const normalizePortfolio = (raw) => {
-  const works = (raw.works || [])
-    .map((w) => withCaseStudy(toWork(w), w))
-    .sort((a, b) => rank(a) - rank(b));
-
-  const testimonials = (raw.testimonials || [])
-    .filter((t) => t.feedback)
-    .map((t) => ({
-      id: t._id,
-      quote: fixText(t.feedback),
-      name: fixText(t.name),
-      role: fixText(t.role),
-      company: fixText(t.company),
-      placeholder: false,
-    }));
-  if (USE_PLACEHOLDERS && testimonials.length < 2) {
-    testimonials.push(...placeholders.TESTIMONIALS.slice(0, 2 - testimonials.length).map((t) => ({ ...t, placeholder: true })));
-  }
+  const works = (raw.works || []).map(toWork).sort((a, b) => rank(a) - rank(b));
 
   const experiences = (raw.experiences || []).map((entry) => ({
     id: entry._id,
@@ -161,7 +116,6 @@ export const normalizePortfolio = (raw) => {
 
   return {
     works,
-    testimonials,
     experiences,
     abouts,
     skills,
@@ -174,13 +128,6 @@ export const normalizePortfolio = (raw) => {
     },
   };
 };
-
-// Booking link for "Book a call" buttons: VITE_BOOKING_URL, or a placeholder in dev, or nothing.
-export const BOOKING = import.meta.env.VITE_BOOKING_URL
-  ? { url: import.meta.env.VITE_BOOKING_URL, placeholder: false }
-  : USE_PLACEHOLDERS
-    ? { url: placeholders.BOOKING_URL, placeholder: true }
-    : null;
 
 // status: 'loading' | 'ready' | 'error'
 export const usePortfolio = () => {

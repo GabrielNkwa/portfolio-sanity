@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 
-import { track } from '../analytics';
-import { BOOKING } from '../data/portfolio';
-import { Button, Field, Label, MaskLine, PlaceholderBadge } from '../ui';
+import { Button, Field, Label, MaskLine } from '../ui';
 import styles from './Contact.module.css';
 
 const EMAIL = 'gabrielnkwa@gmail.com';
@@ -48,9 +46,7 @@ const ContactForm = () => {
         throw new Error(data.error || 'Your message could not be sent.');
       }
       setState('sent');
-      track('contact_submit', { result: 'sent' });
     } catch (err) {
-      track('contact_submit', { result: 'failed' });
       setFailure(err.message);
       setState('failed');
     }
@@ -105,15 +101,6 @@ const Contact = () => (
         <p>Send a few lines about the product, the deadline and the team. I reply within one working day.</p>
         <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
         <a href={PHONE.href}>{PHONE.label}</a>
-        {BOOKING && (
-          <div className={styles.booking}>
-            <p>Prefer to talk it through?</p>
-            <Button href={BOOKING.url} external variant="volt" arrow onClick={() => track('booking_click', { from: 'contact' })}>
-              Book a 20-min call
-            </Button>
-            <PlaceholderBadge show={BOOKING.placeholder} />
-          </div>
-        )}
       </div>
       <ContactForm />
     </div>

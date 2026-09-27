@@ -6,6 +6,7 @@ import styles from './Nav.module.css';
 const LINKS = [
   { href: '#work', label: 'Work' },
   { href: '#services', label: 'Services', phone: false },
+  { href: '#record', label: 'Record', phone: false },
   { href: '#contact', label: 'Contact' },
 ];
 
