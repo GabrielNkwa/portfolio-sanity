@@ -5,6 +5,7 @@ import { AppWrap, MotionWrap } from '../../wrapper';
 // import './About.scss';
 import './About.css';
 import { urlFor, client } from '../../client';
+import { fixText } from '../../utils/normalize';
 
 const About = () => {
   const [abouts, setAbouts] = useState([]);
@@ -20,24 +21,24 @@ const About = () => {
   return (
     <>
       <h2 className="head-text">
-      
+        What I <span>Build</span>
       </h2>
 
       <div className="app__profiles">
-        {abouts.map((about, index) => (
+        {abouts.map((about) => (
           <motion.div
             whileInView={{ opacity: 1 }}
             whileHover={{ scale: 1.1 }}
             transition={{ duration: 0.5, type: 'tween' }}
             className="app__profile-item"
-            key={about.title + index}
+            key={about._id}
           >
-            <img src={urlFor(about.imgUrl)} alt={about.title} />
+            <img src={urlFor(about.imgUrl).width(600).auto('format').url()} alt="" />
             <h2 className="bold-text" style={{ marginTop: 20 }}>
-              {about.title}
+              {fixText(about.title)}
             </h2>
             <p className="p-text" style={{ marginTop: 10 }}>
-              {about.description}
+              {fixText(about.description)}
             </p>
           </motion.div>
         ))}

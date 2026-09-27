@@ -131,3 +131,34 @@
     margin: 1rem 0;
   }
 }
+
+.app__footer-form .app__footer-field {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.app__footer-form div input[aria-invalid='true'],
+.app__footer-form div textarea[aria-invalid='true'] {
+  box-shadow: inset 0 0 0 1px #c62828;
+}
+
+.app__footer-error {
+  color: #c62828;
+  font-size: 0.85rem;
+  text-align: left;
+  padding: 0.4rem 0.95rem 0;
+  width: 100%;
+}
+
+.app__footer-honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.app__footer-form button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
