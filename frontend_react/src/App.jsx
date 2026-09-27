@@ -2,6 +2,7 @@ import React from 'react';
 
 import { usePortfolio } from './data/portfolio';
 import Contact from './sections/Contact';
+import Cursor from './sections/Cursor';
 import Experience from './sections/Experience';
 import FeaturedWork from './sections/FeaturedWork';
 import Hero from './sections/Hero';
@@ -21,6 +22,7 @@ const App = () => {
       <a className="skip-link" href="#main">
         Skip to content
       </a>
+      <Cursor />
       <Nav />
       <main id="main">
         <Hero works={works} />

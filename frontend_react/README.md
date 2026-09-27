@@ -43,6 +43,14 @@ Anything prefixed `VITE_` is bundled into the browser JavaScript. Never give a s
 
 To change which projects lead the page, edit `PRIORITY` in `src/data/portfolio.js`.
 
+## Motion
+
+- Featured work is a pinned rail: the section is as tall as the track is wide, and vertical scroll moves the track sideways (`useScroll` + `useTransform`). Tabbing to a slide's link scrolls the page to that slide.
+- The project index shows a screenshot that trails the cursor, and its rows stagger in again when the filter changes.
+- Stats count up once when they come into view; screen readers get the final number.
+- `Cursor.jsx` draws a volt dot that grows over links. The system cursor stays visible.
+- Cursor effects only run on mouse and trackpad (`pointer: fine`). With reduced motion turned on in the OS, the rail becomes a swipe row, counters show final values, the cursor preview is off, and reveals only fade.
+
 Run `pnpm dev` and open http://localhost:3000/styleguide.html to see every component and state. The style guide is not part of the production build.
 
 Framer Motion animations respect the OS reduced-motion setting through `<MotionConfig reducedMotion="user">` in `main.jsx`.
