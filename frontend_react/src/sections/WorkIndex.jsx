@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { motion, useMotionValue, useReducedMotion, useSpring } from 'framer-motion';
 
 import { imageUrl } from '../data/portfolio';
@@ -16,18 +16,25 @@ const item = {
 };
 
 // Screenshot that trails the cursor while hovering a row. Mouse and trackpad only.
-const CursorPreview = ({ work, x, y }) => (
-  <motion.div className={styles.preview} style={{ x, y }} aria-hidden="true">
-    <motion.div
-      className={styles.previewInner}
-      initial={false}
-      animate={{ opacity: work ? 1 : 0, scale: work ? 1 : 0.7 }}
-      transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-    >
-      {work && <img src={imageUrl(work.image, 720)} alt="" />}
+// Keeps the last image while fading out, so it doesn't vanish before the frame does.
+const CursorPreview = ({ work, x, y }) => {
+  const last = useRef(null);
+  if (work) last.current = work;
+  const shown = work || last.current;
+
+  return (
+    <motion.div className={styles.preview} style={{ x, y }} aria-hidden="true">
+      <motion.div
+        className={styles.previewInner}
+        initial={false}
+        animate={{ opacity: work ? 1 : 0, scale: work ? 1 : 0.7 }}
+        transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+      >
+        {shown && <img src={imageUrl(shown.image, 720)} alt="" />}
+      </motion.div>
     </motion.div>
-  </motion.div>
-);
+  );
+};
 
 // Every project as a large typographic row, filterable by Web and Mobile.
 const WorkIndex = ({ status, works = [], onRetry, onOpen }) => {

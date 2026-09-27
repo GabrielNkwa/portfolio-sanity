@@ -30,8 +30,10 @@ const Slide = ({ work, index, active, onFocus }) => (
   </li>
 );
 
-const Counter = ({ current, total }) => (
-  <p className={styles.count} aria-live="polite">
+// Announced only in the swipe row, where the visitor moves one slide at a time.
+// In the pinned rail it would announce every slide during an ordinary page scroll.
+const Counter = ({ current, total, live = false }) => (
+  <p className={styles.count} aria-live={live ? 'polite' : undefined}>
     <b>{pad(current + 1)}</b> / {pad(total)}
   </p>
 );
@@ -153,7 +155,7 @@ const SwipeRow = ({ status, featured, onRetry }) => {
           id="featured-title"
           title="Featured work"
           size="md"
-          aside={status === 'ready' && <Counter current={current} total={featured.length} />}
+          aside={status === 'ready' && <Counter current={current} total={featured.length} live />}
         />
       </div>
       {body}
