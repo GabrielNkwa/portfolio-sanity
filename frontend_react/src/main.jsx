@@ -5,7 +5,7 @@ import { MotionConfig } from 'framer-motion';
 import App from './App';
 import './styles/tokens.css';
 import './styles/a11y.css';
-import './index.css';
+import './styles/base.css';
 
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>

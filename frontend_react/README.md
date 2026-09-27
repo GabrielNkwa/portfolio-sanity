@@ -33,8 +33,15 @@ Anything prefixed `VITE_` is bundled into the browser JavaScript. Never give a s
 
 - `src/styles/tokens.css`: colors, type scale, spacing, motion and z-index as CSS variables. Loaded globally.
 - `src/styles/a11y.css`: skip link, two-tone focus ring, `.visually-hidden`. Loaded globally.
-- `src/styles/base.css`: dark page, reset, grain overlay, reduced-motion rules. Used by the style guide now; the app switches to it in Phase 3.
-- `src/ui/`: `Button`, `IconLink`, `Chip`, `Tag`, `Label`, `SectionHeader`, `MediaFrame`, `Field`, `Reveal`, `MaskLine`. Each has a CSS Module, so styles can't leak between components.
+- `src/styles/base.css`: dark page, reset, grain overlay, reduced-motion rules. Loaded globally.
+- `src/ui/`: `Button`, `IconLink`, `Chip`, `Tag`, `Label`, `SectionHeader`, `MediaFrame`, `Field`, `Reveal`, `MaskLine`, `Skeleton`, `StatusMessage`. Each has a CSS Module, so styles can't leak between components.
+
+## Page structure
+
+- `src/data/portfolio.js`: one GROQ query for the whole page, plus all content cleanup (text repair, tag mapping, title fixes, project order via `PRIORITY`). `usePortfolio()` returns `{ status, data, retry }`.
+- `src/sections/`: `Nav`, `Hero`, `Ticker`, `Stats`, `FeaturedWork`, `WorkIndex`, `Services`, `Experience`, `Stack`, `Contact`, composed in `App.jsx`. Sections keep their headings visible while loading and show skeletons, empty and error states.
+
+To change which projects lead the page, edit `PRIORITY` in `src/data/portfolio.js`.
 
 Run `pnpm dev` and open http://localhost:3000/styleguide.html to see every component and state. The style guide is not part of the production build.
 

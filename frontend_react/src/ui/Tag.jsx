@@ -15,6 +15,8 @@ export const Chip = ({ pressed = false, count, className, children, ...rest }) =
 );
 
 // Uppercase kicker above headings.
-export const Label = ({ as: Comp = 'p', tone, className, children }) => (
-  <Comp className={cx(styles.label, tone === 'strong' && styles.strong, className)}>{children}</Comp>
+export const Label = ({ as: Comp = 'p', tone, className, children, ...rest }) => (
+  <Comp className={cx(styles.label, tone === 'strong' && styles.strong, className)} {...rest}>
+    {children}
+  </Comp>
 );

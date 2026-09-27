@@ -1,0 +1,33 @@
+.ticker {
+  margin: var(--space-6) -2vw;
+  padding: 14px 0;
+  overflow: hidden;
+  background: var(--color-volt);
+  color: var(--color-on-volt);
+  transform: rotate(-2deg);
+}
+
+.run {
+  display: flex;
+  width: max-content;
+  animation: tick 28s linear infinite;
+}
+
+.run span {
+  padding-right: 40px;
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4vw, 48px);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.run span::after {
+  content: '✦';
+  margin-left: 40px;
+  font-size: 0.6em;
+  vertical-align: middle;
+}
+
+@keyframes tick {
+  to { transform: translateX(-50%); }
+}

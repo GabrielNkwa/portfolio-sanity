@@ -1,0 +1,72 @@
+.section {
+  padding: var(--section-y) var(--gutter) var(--space-8);
+}
+
+.title {
+  margin: var(--space-3) 0 var(--space-7);
+  font-family: var(--font-display);
+  font-size: var(--fs-display);
+  font-weight: 400;
+  line-height: var(--lh-display);
+  text-transform: uppercase;
+}
+
+.list {
+  list-style: none;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: minmax(160px, 1fr) 2fr;
+  gap: var(--space-5);
+  padding: 28px 0;
+  border-top: var(--border);
+}
+
+/* Outlined year that fills with volt on hover. */
+.year {
+  font-family: var(--font-display);
+  font-size: clamp(56px, 8vw, 120px);
+  line-height: 0.85;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--color-muted);
+  transition:
+    color var(--dur),
+    -webkit-text-stroke-color var(--dur);
+}
+
+.row:hover .year {
+  color: var(--color-volt);
+  -webkit-text-stroke-color: var(--color-volt);
+}
+
+.roles {
+  display: grid;
+  align-content: start;
+  gap: 20px;
+  padding-top: var(--space-2);
+  list-style: none;
+}
+
+.role {
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.role span {
+  color: var(--color-muted);
+  font-weight: 500;
+}
+
+.desc {
+  margin-top: 2px;
+  color: var(--color-muted);
+  max-width: 60ch;
+}
+
+@media (max-width: 640px) {
+  .row {
+    grid-template-columns: 1fr;
+  }
+}

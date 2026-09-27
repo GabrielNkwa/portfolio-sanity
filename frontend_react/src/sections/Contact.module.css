@@ -1,0 +1,81 @@
+.contact {
+  padding: 120px var(--gutter) var(--space-6);
+  background: var(--color-volt);
+  color: var(--color-on-volt);
+}
+
+/* The two-tone ring would vanish on volt; use solid black here. */
+.contact a:focus-visible,
+.contact button:focus-visible {
+  outline: 2px solid var(--color-on-volt);
+  box-shadow: none;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(100px, 22vw, 360px);
+  font-weight: 400;
+  line-height: var(--lh-display);
+  text-transform: uppercase;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 60px;
+  margin-top: 60px;
+}
+
+.info p {
+  max-width: 36ch;
+  margin-bottom: var(--space-5);
+  font-weight: 500;
+}
+
+.info a {
+  display: block;
+  width: fit-content;
+  margin-bottom: 14px;
+  border-bottom: 2px solid currentColor;
+  font-size: clamp(22px, 2.6vw, 34px);
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.form {
+  display: grid;
+  gap: 28px;
+}
+
+.failure {
+  color: var(--color-error-on-volt);
+  font-weight: 700;
+}
+
+.failure a {
+  text-decoration: underline;
+}
+
+.sent {
+  font-size: 28px;
+  font-weight: 700;
+  max-width: 24ch;
+}
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-top: 100px;
+  padding-top: 20px;
+  border-top: 2px solid var(--color-on-volt);
+  font-size: var(--fs-small);
+  font-weight: 600;
+}
+
+@media (max-width: 800px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

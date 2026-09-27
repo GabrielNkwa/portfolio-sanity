@@ -19,7 +19,7 @@
   --font-display: 'Anton', Impact, 'Arial Narrow', sans-serif;
   --font-body: 'Archivo', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
-  --fs-hero: clamp(96px, 24vw, 380px);
+  --fs-hero: clamp(96px, min(24vw, 36dvh), 380px); /* capped by height so the CTA stays above the fold */
   --fs-display: clamp(56px, 9vw, 140px);
   --fs-display-sm: clamp(48px, 7vw, 110px);
   --fs-title: clamp(32px, 4vw, 56px);
