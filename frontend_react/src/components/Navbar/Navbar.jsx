@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-// import './Navbar.scss';
 import './Navbar.css';
 import { HiMenuAlt4, HiX } from 'react-icons/hi';
 import { motion } from 'framer-motion';

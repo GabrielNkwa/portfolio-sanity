@@ -2,10 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Tooltip } from 'react-tooltip';
 
-import { AppWrap, MotionWrap } from '../../wrapper';
 import { urlFor, client } from '../../client';
 import { fixText } from '../../utils/normalize';
-// import './Skills.scss';
 import './Skills.css';
 
 // Company names stored in capitals with full street addresses become "Defence Space Administration".
@@ -85,8 +83,4 @@ const Skills = () => {
   );
 };
 
-export default AppWrap(
-  MotionWrap(Skills, 'app__skills'),
-  'skills',
-  'app__whitebg'
-);
+export default Skills;

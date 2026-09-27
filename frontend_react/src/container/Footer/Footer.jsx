@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 
 import { images } from '../../constants';
-import { AppWrap, MotionWrap } from '../../wrapper';
 
-// import './Footer.scss';
 import './Footer.css';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -148,8 +146,4 @@ const Footer = () => {
   );
 };
 
-export default AppWrap(
-  MotionWrap(Footer, 'app__footer'),
-  'contact',
-  'app__whitebg'
-);
+export default Footer;

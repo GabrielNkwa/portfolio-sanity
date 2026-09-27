@@ -1,7 +1,7 @@
 // Vercel serverless function: stores a contact message in Sanity.
 // Requires the SANITY_WRITE_TOKEN environment variable (Editor token) in the Vercel project.
 
-const PROJECT_ID = process.env.REACT_APP_SANITY_PROJECT_ID || 'rm2ky6he';
+const PROJECT_ID = process.env.SANITY_PROJECT_ID || 'rm2ky6he';
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const clean = (value, max) => (typeof value === 'string' ? value.trim().slice(0, max) : '');
