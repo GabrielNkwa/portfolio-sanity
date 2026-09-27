@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Gabriel Nkwa — Product Engineer</title>
+<meta name="description" content="Gabriel Nkwa builds web and mobile products end to end: React, Next.js, React Native and Flutter, from Abuja to wherever the team is." />
+<meta name="theme-color" content="#0a0a0b" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #0a0a0b;
+    --bg-2: #111113;
+    --surface: #161618;
+    --line: rgba(255,255,255,.08);
+    --text: #f5f5f7;
+    --muted: #8e8e93;
+    --dim: #5a5a5f;
+    --accent: #2997ff;
+    --ease: cubic-bezier(.22,1,.36,1);
+    --wrap: 1180px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+  body { background: var(--bg); color: var(--text); font-family: 'Geist', system-ui, sans-serif; font-size: 17px; line-height: 1.5; overflow-x: hidden; }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; max-width: 100%; }
+  .wrap { width: min(var(--wrap), 100% - 40px); margin-inline: auto; }
+  .skip { position: absolute; left: -999px; top: 8px; background: var(--text); color: var(--bg); padding: 8px 14px; border-radius: 8px; z-index: 100; }
+  .skip:focus { left: 8px; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+
+  /* nav */
+  .nav { position: fixed; inset: 0 0 auto; z-index: 50; height: 52px; backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); background: rgba(10,10,11,.72); border-bottom: 1px solid var(--line); }
+  .nav .wrap { height: 100%; display: flex; align-items: center; justify-content: space-between; }
+  .nav .brand { font-weight: 600; font-size: 15px; letter-spacing: -.01em; }
+  .nav ul { display: flex; gap: 28px; list-style: none; font-size: 13px; color: var(--muted); }
+  .nav ul a { transition: color .2s; }
+  .nav ul a:hover, .nav ul a.active { color: var(--text); }
+  .nav .cta { font-size: 13px; background: var(--text); color: var(--bg); padding: 6px 14px; border-radius: 999px; font-weight: 500; transition: transform .2s var(--ease), background .2s; }
+  .nav .cta:hover { background: #fff; }
+  .nav .cta:active { transform: scale(.97); }
+  @media (max-width: 720px) { .nav ul { display: none; } }
+
+  /* hero */
+  .hero { min-height: 100dvh; display: grid; place-items: center; text-align: center; padding: 120px 0 40px; position: relative; }
+  .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(60% 50% at 50% 30%, rgba(41,151,255,.12), transparent 70%); pointer-events: none; }
+  .eyebrow { color: var(--muted); font-size: 15px; font-weight: 500; letter-spacing: .01em; margin-bottom: 20px; }
+  .eyebrow b { color: var(--accent); font-weight: 500; }
+  .hero h1 { font-size: clamp(44px, 8vw, 112px); line-height: .98; letter-spacing: -.045em; font-weight: 600; text-wrap: balance; }
+  .hero h1 .grad { color: #6e6e73; }
+  .hero h1 .w { display: inline-block; opacity: 0; filter: blur(12px); transform: translateY(24px); animation: wordIn 1.1s var(--ease) forwards; }
+  @keyframes wordIn { to { opacity: 1; filter: blur(0); transform: none; } }
+  .hero p.lede { max-width: 560px; margin: 28px auto 0; color: var(--muted); font-size: clamp(17px, 1.6vw, 21px); line-height: 1.45; opacity: 0; animation: fadeUp 1s .9s var(--ease) forwards; text-wrap: pretty; }
+  .hero .actions { display: flex; gap: 24px; justify-content: center; align-items: center; margin-top: 36px; opacity: 0; animation: fadeUp 1s 1.1s var(--ease) forwards; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+  .btn { display: inline-flex; align-items: center; gap: 8px; background: var(--accent); color: #fff; padding: 12px 22px; border-radius: 999px; font-weight: 500; font-size: 16px; transition: transform .25s var(--ease), background .2s; }
+  .btn:hover { background: #3fa2ff; transform: translateY(-1px); }
+  .btn:active { transform: scale(.97); }
+  .link { color: var(--accent); font-size: 16px; }
+  .link:hover { text-decoration: underline; text-underline-offset: 4px; }
+  .link::after { content: ' ›'; }
+
+  /* scroll-scaled showcase */
+  .showcase { height: 180vh; position: relative; }
+  .showcase .stick { position: sticky; top: 0; height: 100dvh; display: grid; place-items: center; overflow: hidden; }
+  .showcase .frame { width: min(1180px, 92vw, (100dvh - 150px) * 16 / 9); aspect-ratio: 16/9; border-radius: 28px; overflow: hidden; background: var(--surface); box-shadow: 0 40px 120px -20px rgba(41,151,255,.25), 0 0 0 1px var(--line); transform: scale(var(--s, .72)) translateY(var(--y, 60px)); will-change: transform; }
+  .showcase .frame img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+  .showcase .cap { position: absolute; bottom: 7vh; left: 0; right: 0; text-align: center; opacity: var(--o, 0); transition: opacity .3s; }
+  .showcase .cap span { background: rgba(22,22,24,.8); backdrop-filter: blur(16px); padding: 10px 18px; border-radius: 999px; font-size: 14px; color: var(--muted); border: 1px solid var(--line); }
+  .showcase .cap b { color: var(--text); font-weight: 500; }
+
+  section { padding: 140px 0; }
+  .sec-head { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 56px; flex-wrap: wrap; }
+  h2 { font-size: clamp(40px, 6vw, 72px); letter-spacing: -.04em; line-height: 1; font-weight: 600; text-wrap: balance; }
+  h2 .dim { color: var(--dim); }
+
+  /* segmented control */
+  .seg { position: relative; display: inline-flex; background: var(--surface); border-radius: 999px; padding: 4px; border: 1px solid var(--line); }
+  .seg button { position: relative; z-index: 1; background: none; border: 0; color: var(--muted); font: inherit; font-size: 14px; font-weight: 500; padding: 8px 18px; border-radius: 999px; cursor: pointer; transition: color .25s; }
+  .seg button[aria-pressed="true"] { color: var(--bg); }
+  .seg .pill { position: absolute; top: 4px; bottom: 4px; left: 0; background: var(--text); border-radius: 999px; transition: transform .45s var(--ease), width .45s var(--ease); }
+
+  /* work grid */
+  .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; }
+  .tile { grid-column: span 6; background: var(--surface); border-radius: 28px; overflow: hidden; position: relative; display: flex; flex-direction: column; transition: transform .6s var(--ease), opacity .5s; }
+  .tile.wide { grid-column: span 12; }
+  .tile.wide .media { aspect-ratio: 21/9; }
+  .tile .media { aspect-ratio: 16/10; overflow: hidden; background: var(--bg-2); position: relative; }
+  .tile .media img { width: 100%; height: 100%; object-fit: cover; object-position: top; transition: transform 1.2s var(--ease); }
+  .tile.portrait .media { display: grid; place-items: center; padding-top: 32px; background: radial-gradient(80% 80% at 50% 100%, rgba(41,151,255,.18), var(--bg-2)); }
+  .tile.portrait .media img { width: auto; height: 118%; object-fit: contain; border-radius: 24px 24px 0 0; box-shadow: 0 0 0 6px #1d1d1f, 0 0 0 7px #333; margin-top: 8%; }
+  .tile:hover .media img { transform: scale(1.035); }
+  .tile .body { padding: 28px 32px 32px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+  .tile .kind { font-size: 12px; font-weight: 600; color: var(--accent); letter-spacing: .04em; }
+  .tile h3 { font-size: 28px; letter-spacing: -.025em; font-weight: 600; line-height: 1.1; }
+  .tile p { color: var(--muted); max-width: 52ch; text-wrap: pretty; }
+  .tile .links { margin-top: auto; padding-top: 16px; display: flex; gap: 20px; font-size: 15px; }
+  .tile.hide { display: none; }
+  @media (max-width: 820px) { .tile, .tile.wide { grid-column: span 12; } .tile.wide .media { aspect-ratio: 16/10; } }
+
+  /* statement: scroll-filled words */
+  .statement { padding: 180px 0; }
+  .statement p { font-size: clamp(30px, 4.4vw, 56px); line-height: 1.15; letter-spacing: -.03em; font-weight: 600; max-width: 22ch; text-wrap: balance; }
+  .statement .sw { color: #2a2a2d; transition: color .35s; }
+  .statement .sw.on { color: var(--text); }
+  .statement .sw.hl.on { color: var(--accent); }
+
+  /* capabilities */
+  .caps { display: grid; grid-template-columns: 1.15fr 1fr; gap: 20px; }
+  .cap-card { background: var(--surface); border-radius: 28px; padding: 40px 40px 0; position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 20px; }
+  .cap-card img { align-self: flex-end; width: 72%; margin: 12px -40px 0 0; border-radius: 20px 0 0 0; mask-image: linear-gradient(to top left, #000 55%, transparent 95%); -webkit-mask-image: linear-gradient(to top left, #000 55%, transparent 95%); transition: transform 1s var(--ease); }
+  .cap-card:hover img { transform: translate(-6px, -6px); }
+  .cap-card h3 { font-size: 36px; letter-spacing: -.03em; line-height: 1.05; font-weight: 600; position: relative; }
+  .cap-card p { color: var(--muted); max-width: 34ch; position: relative; }
+  @media (max-width: 820px) { .caps { grid-template-columns: 1fr; } }
+
+  /* stack marquee */
+  .stack { padding: 40px 0 140px; overflow: hidden; }
+  .marq { display: flex; gap: 14px; width: max-content; animation: marq 40s linear infinite; }
+  .marq:hover { animation-play-state: paused; }
+  @keyframes marq { to { transform: translateX(-50%); } }
+  .chip { display: flex; align-items: center; gap: 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 14px 22px 14px 14px; font-weight: 500; white-space: nowrap; }
+  .chip img { width: 32px; height: 32px; object-fit: contain; background: #fff; border-radius: 9px; padding: 4px; }
+  .fade-x { mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); }
+
+  /* experience */
+  .xp { border-top: 1px solid var(--line); }
+  .xp-row { display: grid; grid-template-columns: 140px 1fr; gap: 24px; padding: 32px 0; border-bottom: 1px solid var(--line); }
+  .xp-row .yr { font-size: 15px; color: var(--muted); font-variant-numeric: tabular-nums; padding-top: 4px; }
+  .xp-row .roles { display: grid; gap: 22px; }
+  .xp-row h4 { font-size: 22px; font-weight: 600; letter-spacing: -.02em; }
+  .xp-row h4 span { color: var(--muted); font-weight: 400; }
+  .xp-row p { color: var(--muted); font-size: 15px; margin-top: 4px; max-width: 60ch; }
+  @media (max-width: 600px) { .xp-row { grid-template-columns: 1fr; gap: 10px; } }
+
+  /* contact */
+  .contact { text-align: center; padding: 180px 0 120px; position: relative; }
+  .contact::before { content: ''; position: absolute; inset: 0; background: radial-gradient(50% 50% at 50% 60%, rgba(41,151,255,.10), transparent 70%); pointer-events: none; }
+  .contact h2 { font-size: clamp(56px, 11vw, 150px); letter-spacing: -.055em; }
+  .contact .mail { display: inline-block; margin-top: 28px; font-size: clamp(20px, 2.4vw, 28px); color: var(--accent); }
+  .contact .mail:hover { text-decoration: underline; text-underline-offset: 6px; }
+  form { max-width: 560px; margin: 64px auto 0; display: grid; gap: 12px; text-align: left; position: relative; }
+  .field { position: relative; }
+  .field input, .field textarea { width: 100%; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; color: var(--text); font: inherit; padding: 22px 16px 10px; transition: border-color .2s, background .2s; resize: vertical; }
+  .field textarea { min-height: 140px; }
+  .field label { position: absolute; left: 17px; top: 16px; color: var(--muted); font-size: 16px; pointer-events: none; transition: transform .2s var(--ease), font-size .2s; transform-origin: left; }
+  .field input:focus, .field textarea:focus { outline: none; border-color: var(--accent); background: #1a1a1d; }
+  .field input:not(:placeholder-shown) + label, .field input:focus + label,
+  .field textarea:not(:placeholder-shown) + label, .field textarea:focus + label { transform: translateY(-9px) scale(.75); }
+  .field .err { color: #ff6961; font-size: 13px; margin: 6px 4px 0; display: none; }
+  .field.bad input, .field.bad textarea { border-color: #ff6961; }
+  .field.bad .err { display: block; }
+  form .btn { justify-self: center; margin-top: 12px; border: 0; cursor: pointer; font: inherit; font-weight: 500; }
+  .sent { margin-top: 64px; color: var(--muted); font-size: 19px; }
+
+  footer { border-top: 1px solid var(--line); padding: 28px 0 40px; color: var(--dim); font-size: 13px; }
+  footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  footer a:hover { color: var(--text); }
+  footer nav { display: flex; gap: 20px; }
+
+  /* reveal */
+  .rv { opacity: 0; transform: translateY(40px); transition: opacity 1s var(--ease), transform 1s var(--ease); }
+  .rv.in { opacity: 1; transform: none; }
+  .skel { background: linear-gradient(90deg, var(--surface), #1d1d20, var(--surface)); background-size: 200% 100%; animation: sh 1.4s infinite; border-radius: 28px; min-height: 420px; }
+  @keyframes sh { to { background-position: -200% 0; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+    .hero h1 .w, .hero p.lede, .hero .actions { opacity: 1; filter: none; transform: none; }
+    .rv { opacity: 1; transform: none; }
+    .showcase { height: auto; } .showcase .stick { position: static; height: auto; padding: 40px 0; } .showcase .frame { transform: none; }
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top">Gabriel Nkwa</a>
+    <ul>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#capabilities">Capabilities</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a class="cta" href="#contact">Start a project</a>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" id="top">
+    <div class="wrap">
+      <p class="eyebrow"><b>Available</b> for Q4 2026 builds</p>
+      <h1 id="headline">Products that ship.<br /><span class="grad">Web and mobile, end to end.</span></h1>
+      <p class="lede">I'm Gabriel, a product engineer in Abuja. I take a company's idea from spec to App Store and production, in React, Next.js and Flutter.</p>
+      <div class="actions">
+        <a class="btn" href="#contact">Book an intro call</a>
+        <a class="link" href="#work">See the work</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="showcase" id="showcase" aria-hidden="true">
+    <div class="stick">
+      <div class="frame"><img id="showImg" alt="" /></div>
+      <div class="cap"><span><b id="showTitle">Fantasy Pro League</b> · shipped in 2026</span></div>
+    </div>
+  </div>
+
+  <section id="work">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 class="rv">Selected work. <span class="dim">Real clients, live in production.</span></h2>
+        <div class="seg rv" role="group" aria-label="Filter projects">
+          <span class="pill"></span>
+          <button aria-pressed="true" data-f="All">All</button>
+          <button aria-pressed="false" data-f="Web">Web</button>
+          <button aria-pressed="false" data-f="Mobile">Mobile</button>
+        </div>
+      </div>
+      <div class="grid" id="grid">
+        <div class="skel" style="grid-column: span 12"></div>
+        <div class="skel" style="grid-column: span 6"></div>
+        <div class="skel" style="grid-column: span 6"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="statement">
+    <div class="wrap">
+      <p id="statement">Seven years building for health supply chains, energy companies, nonprofits and sports leagues. One engineer from first commit to launch day.</p>
+    </div>
+  </section>
+
+  <section id="capabilities" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head"><h2 class="rv">What I do. <span class="dim">Two disciplines, one owner.</span></h2></div>
+      <div class="caps" id="caps"></div>
+    </div>
+  </section>
+
+  <div class="stack fade-x" aria-label="Technology stack"><div class="marq" id="marq"></div></div>
+
+  <section id="experience" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head"><h2 class="rv">Experience.</h2></div>
+      <div class="xp" id="xp"></div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="wrap">
+      <h2 class="rv">Let's build.</h2>
+      <a class="mail rv" href="mailto:gabrielnkwa@gmail.com">gabrielnkwa@gmail.com</a>
+      <form id="form" novalidate>
+        <div class="field"><input id="n" name="name" placeholder=" " autocomplete="name" /><label for="n">Name</label><p class="err">Tell me who you are.</p></div>
+        <div class="field"><input id="e" name="email" type="email" placeholder=" " autocomplete="email" /><label for="e">Work email</label><p class="err">That email doesn't look right.</p></div>
+        <div class="field"><textarea id="m" name="message" placeholder=" "></textarea><label for="m">What are you building?</label><p class="err">A sentence or two is enough.</p></div>
+        <button class="btn" type="submit">Send message</button>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Gabriel Nkwa · Abuja, Nigeria</span>
+    <nav><a href="https://github.com/GabrielNkwa" target="_blank" rel="noopener">GitHub</a><a href="tel:+2347044354339">+234 704 435 4339</a></nav>
+  </div>
+</footer>
+
+<script src="shared/snapshot.js"></script>
+<script src="shared/data.js"></script>
+<script>
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Headline: split into words with staggered blur-in.
+  (() => {
+    const h = document.getElementById('headline');
+    let i = 0;
+    const walk = (node) => {
+      [...node.childNodes].forEach((c) => {
+        if (c.nodeType === 3) {
+          const frag = document.createDocumentFragment();
+          c.textContent.split(/(\s+)/).forEach((t) => {
+            if (!t.trim()) { frag.append(t); return; }
+            const s = document.createElement('span');
+            s.className = 'w'; s.textContent = t; s.style.animationDelay = `${0.08 * i++}s`;
+            frag.append(s);
+          });
+          c.replaceWith(frag);
+        } else walk(c);
+      });
+    };
+    walk(h);
+  })();
+
+  // Statement: words fill in as the paragraph crosses the viewport.
+  const st = document.getElementById('statement');
+  const HL = ['health', 'energy', 'nonprofits', 'sports'];
+  st.innerHTML = st.textContent.split(' ').map((w) => `<span class="sw${HL.some((h) => w.startsWith(h)) ? ' hl' : ''}">${w}</span>`).join(' ');
+  const sws = [...st.querySelectorAll('.sw')];
+
+  const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: 0.12 });
+  const watch = () => document.querySelectorAll('.rv:not(.in)').forEach((el) => io.observe(el));
+
+  const showcase = document.getElementById('showcase');
+  const frame = showcase.querySelector('.frame');
+  const cap = showcase.querySelector('.cap');
+  let ticking = false;
+  const onScroll = () => {
+    if (ticking || reduce) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      const r = showcase.getBoundingClientRect();
+      const p = Math.min(1, Math.max(0, -r.top / (r.height - innerHeight)));
+      const e = 1 - Math.pow(1 - Math.min(1, p * 1.6), 3);
+      frame.style.setProperty('--s', (0.72 + 0.28 * e).toFixed(4));
+      frame.style.setProperty('--y', `${(60 * (1 - e)).toFixed(1)}px`);
+      frame.style.borderRadius = `${28 - 14 * e}px`;
+      cap.style.setProperty('--o', p > 0.55 ? 1 : 0);
+
+      const sr = st.getBoundingClientRect();
+      const sp = Math.min(1, Math.max(0, (innerHeight * 0.85 - sr.top) / (sr.height + innerHeight * 0.35)));
+      const n = Math.round(sp * sws.length);
+      sws.forEach((w, i) => w.classList.toggle('on', i < n));
+
+      const ids = ['work', 'capabilities', 'experience', 'contact'];
+      let cur = null;
+      ids.forEach((id) => { const el = document.getElementById(id); if (el.getBoundingClientRect().top < innerHeight * 0.4) cur = id; });
+      document.querySelectorAll('.nav ul a').forEach((a) => a.classList.toggle('active', a.getAttribute('href') === `#${cur}`));
+      ticking = false;
+    });
+  };
+  addEventListener('scroll', onScroll, { passive: true });
+  if (reduce) sws.forEach((w) => w.classList.add('on'));
+
+  // Segmented control pill.
+  const seg = document.querySelector('.seg');
+  const pill = seg.querySelector('.pill');
+  const movePill = (b) => { pill.style.width = `${b.offsetWidth}px`; pill.style.transform = `translateX(${b.offsetLeft - 4 + 4}px)`; };
+
+  loadPortfolio().then((d) => {
+    const hero = d.works.find((w) => w.title === 'Fantasy Pro League' && w.kind === 'Web') || d.works[0];
+    document.getElementById('showImg').src = img(hero.img, 2000);
+    document.getElementById('showTitle').textContent = hero.title;
+
+    // Order: a strong wide piece first, then pairs.
+    const order = [...d.works];
+    const lead = order.findIndex((w) => !w.portrait);
+    if (lead > 0) order.unshift(...order.splice(lead, 1));
+    document.getElementById('grid').innerHTML = order.map((w, i) => `
+      <article class="tile rv${i === 0 ? ' wide' : ''}${w.portrait ? ' portrait' : ''}" data-kind="${w.kind}" style="transition-delay:${(i % 2) * 90}ms">
+        <div class="media"><img loading="lazy" src="${img(w.img, w.portrait ? 700 : 1600)}" alt="Screenshot of ${w.title}" /></div>
+        <div class="body">
+          <span class="kind">${w.tags.join(' · ')}</span>
+          <h3>${w.title}</h3>
+          ${w.description ? `<p>${w.description}</p>` : ''}
+          <div class="links">
+            ${w.link ? `<a class="link" href="${w.link}" target="_blank" rel="noopener">Visit</a>` : ''}
+            ${w.code ? `<a class="link" href="${w.code}" target="_blank" rel="noopener">Source</a>` : ''}
+          </div>
+        </div>
+      </article>`).join('');
+
+    document.getElementById('caps').innerHTML = d.abouts.map((a, i) => `
+      <div class="cap-card rv" style="transition-delay:${i * 120}ms">
+        <div><p class="eyebrow" style="margin-bottom:12px">${i ? 'iOS · Android' : 'Frontend · Backend'}</p><h3>${a.title.replace(' Developer', '<br/>development')}</h3></div>
+        <p>${a.description}</p>
+        <img src="${img(a.img, 700)}" alt="" />
+      </div>`).join('');
+
+    const chips = d.skills.map((s) => `<div class="chip"><img src="${img(s.icon, 96)}" alt="" />${s.name}</div>`).join('');
+    document.getElementById('marq').innerHTML = chips + chips;
+
+    document.getElementById('xp').innerHTML = d.exp.map((e) => `
+      <div class="xp-row rv">
+        <div class="yr">${e.year}</div>
+        <div class="roles">${e.roles.map((r) => `<div><h4>${r.role} <span>at ${r.company}</span></h4>${r.desc ? `<p>${r.desc}</p>` : ''}</div>`).join('')}</div>
+      </div>`).join('');
+
+    watch();
+    movePill(seg.querySelector('[aria-pressed="true"]'));
+    onScroll();
+  });
+
+  seg.addEventListener('click', (ev) => {
+    const b = ev.target.closest('button'); if (!b) return;
+    seg.querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', x === b));
+    movePill(b);
+    const f = b.dataset.f;
+    document.querySelectorAll('.tile').forEach((t) => {
+      const show = f === 'All' || t.dataset.kind === f;
+      t.classList.toggle('hide', !show);
+      t.classList.toggle('wide', false);
+    });
+    const first = document.querySelector('.tile:not(.hide):not(.portrait)');
+    if (first) first.classList.add('wide');
+    if (!reduce) document.querySelectorAll('.tile:not(.hide)').forEach((t, i) => t.animate([{ opacity: 0, transform: 'translateY(24px)' }, { opacity: 1, transform: 'none' }], { duration: 600, delay: i * 50, easing: 'cubic-bezier(.22,1,.36,1)', fill: 'backwards' }));
+  });
+  addEventListener('resize', () => movePill(seg.querySelector('[aria-pressed="true"]')));
+
+  // Contact: validate inline, then hand off to the mail client (prototype only).
+  document.getElementById('form').addEventListener('submit', (ev) => {
+    ev.preventDefault();
+    const f = ev.target;
+    const checks = { name: (v) => v.trim().length > 1, email: (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v), message: (v) => v.trim().length > 9 };
+    let ok = true;
+    Object.entries(checks).forEach(([k, fn]) => { const good = fn(f[k].value); f[k].closest('.field').classList.toggle('bad', !good); ok = ok && good; });
+    if (!ok) return;
+    location.href = `mailto:gabrielnkwa@gmail.com?subject=${encodeURIComponent('Project enquiry from ' + f.name.value)}&body=${encodeURIComponent(f.message.value + '\n\n' + f.email.value)}`;
+    f.outerHTML = '<p class="sent">Thanks. Your mail app should open with the message ready to send.</p>';
+  });
+</script>
+</body>
+</html>

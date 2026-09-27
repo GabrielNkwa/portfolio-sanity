@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "redesign",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "3000", "--directory", "redesign"],
+      "port": 3000
+    },
+    {
+      "name": "frontend",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "frontend_react", "start"],
+      "port": 3000
+    }
+  ]
+}

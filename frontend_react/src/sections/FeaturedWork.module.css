@@ -1,0 +1,114 @@
+.static {
+  padding-top: var(--section-y);
+}
+
+.pad {
+  padding-inline: var(--gutter);
+}
+
+.count {
+  font-family: var(--font-display);
+  font-size: 28px;
+  color: var(--color-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.count b {
+  color: var(--color-text);
+  font-weight: 400;
+}
+
+/* Pinned rail */
+.rail {
+  position: relative;
+}
+
+.stick {
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: safe center; /* top-aligns instead of clipping on very short screens */
+  padding-top: 56px;
+  overflow: hidden;
+  overflow: clip; /* not a scroll container, so focusing a slide can't scroll it sideways */
+}
+
+.pinnedTrack {
+  display: flex;
+  gap: var(--space-5);
+  width: max-content;
+  padding-inline: var(--gutter);
+  list-style: none;
+  will-change: transform;
+}
+
+/* Slides shrink on short screens so the caption stays in the pinned frame. */
+.pinnedTrack .slide {
+  flex: 0 0 clamp(min(72vw, 320px), (100dvh - 340px) * 16 / 9, min(72vw, 980px));
+}
+
+.progress {
+  position: relative;
+  height: 2px;
+  margin: var(--space-6) var(--gutter) 0;
+  background: var(--color-line);
+}
+
+.progress i {
+  position: absolute;
+  inset: 0;
+  background: var(--color-volt);
+  transform-origin: left;
+}
+
+/* Swipe row */
+.track {
+  display: flex;
+  gap: var(--space-5);
+  padding: 0 var(--gutter) var(--space-5);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--gutter);
+  list-style: none;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-line-strong) transparent;
+}
+
+.track:focus-visible {
+  outline-offset: -2px;
+}
+
+.track .slide {
+  flex: 0 0 min(80vw, 980px);
+  scroll-snap-align: start;
+}
+
+/* Slide */
+.caption {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-5);
+  margin-top: 18px;
+}
+
+.name {
+  margin-top: var(--space-1);
+  font-family: var(--font-display);
+  font-size: var(--fs-title);
+  font-weight: 400;
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+
+.desc {
+  max-width: 44ch;
+  margin-top: var(--space-2);
+  color: var(--color-muted);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

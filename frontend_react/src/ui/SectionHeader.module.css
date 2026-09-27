@@ -1,0 +1,32 @@
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: var(--space-5);
+  margin-bottom: var(--space-7);
+}
+
+.label {
+  margin-bottom: var(--space-3);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: var(--lh-display);
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.lg {
+  font-size: var(--fs-display);
+}
+
+.md {
+  font-size: var(--fs-display-sm);
+}
+
+.aside {
+  flex: none;
+}

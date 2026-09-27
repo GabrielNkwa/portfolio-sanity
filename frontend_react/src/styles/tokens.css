@@ -1,0 +1,66 @@
+/*
+  Volt design tokens. Variables only: safe to load globally before the
+  sections switch over in Phase 3.
+*/
+:root {
+  /* Color */
+  --color-bg: #0b0b0b;
+  --color-bg-raised: #141414;
+  --color-text: #f2f2f0;
+  --color-muted: #8a8a86; /* 5.6:1 on --color-bg */
+  --color-line: #262626;
+  --color-line-strong: #3a3a3a;
+  --color-volt: #d4ff3a;
+  --color-on-volt: #000000;
+  --color-error: #ff6b6b; /* on dark */
+  --color-error-on-volt: #b3001b;
+
+  /* Type */
+  --font-display: 'Anton', Impact, 'Arial Narrow', sans-serif;
+  --font-body: 'Archivo Variable', 'Archivo', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --fs-hero: clamp(96px, min(24vw, 36dvh), 380px); /* capped by height so the CTA stays above the fold */
+  --fs-display: clamp(56px, 9vw, 140px);
+  --fs-display-sm: clamp(48px, 7vw, 110px);
+  --fs-title: clamp(32px, 4vw, 56px);
+  --fs-lede: 18px;
+  --fs-body: 16px;
+  --fs-small: 14px;
+  --fs-label: 12px;
+
+  --lh-display: 0.86;
+  --lh-body: 1.5;
+  --tracking-label: 0.14em;
+
+  /* Space */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+  --space-10: 140px;
+  --gutter: clamp(16px, 4vw, 56px);
+  --section-y: clamp(96px, 12vw, 140px);
+
+  /* Shape */
+  --radius-sm: 6px;
+  --radius-pill: 999px;
+  --border: 1px solid var(--color-line);
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 200ms;
+  --dur: 400ms;
+  --dur-slow: 1000ms;
+
+  /* Layers */
+  --z-preview: 40;
+  --z-nav: 50;
+  --z-grain: 60;
+  --z-cursor: 70;
+  --z-skip: 100;
+}

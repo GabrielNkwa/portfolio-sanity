@@ -1,0 +1,59 @@
+.wrap {
+  padding: var(--space-9) var(--gutter) 0;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: var(--border);
+}
+
+/* Value sits above its label visually; the dt comes first for screen readers. */
+.stat {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+  gap: var(--space-2);
+  padding: var(--space-6) var(--space-5) var(--space-7);
+  border-right: var(--border);
+}
+
+.stat:first-child {
+  padding-left: 0;
+}
+
+.stat:last-child {
+  border-right: 0;
+}
+
+.value {
+  font-family: var(--font-display);
+  font-size: clamp(64px, 9vw, 140px);
+  line-height: 0.9;
+  font-variant-numeric: tabular-nums;
+}
+
+.value sup {
+  margin-left: 4px;
+  font-size: 0.35em;
+  color: var(--color-volt);
+  vertical-align: top;
+}
+
+@media (max-width: 760px) {
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .stat:nth-child(2) {
+    border-right: 0;
+  }
+
+  .stat:nth-child(3) {
+    padding-left: 0;
+  }
+
+  .stat:nth-child(n + 3) {
+    border-top: var(--border);
+  }
+}

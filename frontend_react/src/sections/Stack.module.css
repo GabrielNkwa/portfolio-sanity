@@ -1,0 +1,33 @@
+.section {
+  padding: 0 var(--gutter) var(--section-y);
+}
+
+.label {
+  margin-bottom: 20px;
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  list-style: none;
+}
+
+.list li {
+  padding: 6px 22px 2px;
+  border: var(--border);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4vw, 52px);
+  text-transform: uppercase;
+  transition:
+    background-color 300ms,
+    color 300ms,
+    transform 300ms var(--ease-out);
+}
+
+.list li:hover {
+  background: var(--color-text);
+  color: var(--color-on-volt);
+  transform: rotate(-3deg);
+}

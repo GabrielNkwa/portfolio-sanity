@@ -1,0 +1,62 @@
+/* Difference blend keeps the nav readable over dark, light and volt sections. */
+.nav {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: var(--z-nav);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 64px;
+  padding-inline: var(--gutter);
+  color: #fff;
+  mix-blend-mode: difference;
+}
+
+.mark {
+  font-family: var(--font-display);
+  font-size: 26px;
+  letter-spacing: 0.01em;
+}
+
+.links {
+  display: flex;
+  gap: var(--space-6);
+  list-style: none;
+  font-size: var(--fs-small);
+  font-weight: 600;
+}
+
+.links a {
+  position: relative;
+  display: inline-block;
+  padding-block: 12px; /* 24px+ tap target without changing the look */
+}
+
+.links a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 8px; /* 4px below the text, inside the padding */
+  height: 2px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform var(--dur) var(--ease-out);
+}
+
+.links a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Phones keep Work and Contact only. */
+@media (max-width: 700px) {
+  .links {
+    gap: var(--space-5);
+  }
+
+  .wideOnly {
+    display: none;
+  }
+}

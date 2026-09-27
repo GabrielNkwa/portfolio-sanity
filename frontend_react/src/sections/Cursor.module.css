@@ -1,0 +1,17 @@
+.cursor {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: var(--z-cursor);
+  pointer-events: none;
+  mix-blend-mode: difference;
+}
+
+.dot {
+  display: block;
+  width: 14px;
+  height: 14px;
+  margin: -7px 0 0 -7px;
+  border-radius: 50%;
+  background: var(--color-volt);
+}

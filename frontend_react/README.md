@@ -1,70 +1,73 @@
-# Getting Started with Create React App
+# Portfolio frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+React 18 single-page site built with Vite. Content comes from the public Sanity dataset `rm2ky6he/production`. The contact form posts to a Vercel function in `api/contact.js`, which writes to Sanity with a server-side token.
 
-## Available Scripts
+## Setup
 
-In the project directory, you can run:
+Requires Node 22.12+ and pnpm.
 
-### `npm start`
+```bash
+pnpm install
+cp .env.example .env
+pnpm dev
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+The site runs at http://localhost:3000. `pnpm dev` also serves `/api/contact` through a small Vite middleware, so the form works locally when `SANITY_WRITE_TOKEN` is set in `.env`. Submitting it writes a real `contact` document to the production dataset.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Environment variables
 
-### `npm test`
+| Name | Where | Purpose |
+| --- | --- | --- |
+| `VITE_SANITY_PROJECT_ID` | build | Optional. Defaults to `rm2ky6he`. |
+| `SANITY_WRITE_TOKEN` | Vercel and local `.env` | Editor token used only by `api/contact.js`. |
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Anything prefixed `VITE_` is bundled into the browser JavaScript. Never give a secret that prefix.
 
-### `npm run build`
+## Scripts
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- `pnpm dev`: dev server with hot reload
+- `pnpm build`: production build to `dist/`
+- `pnpm preview`: serve the production build locally
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Design system (Volt)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- `src/styles/tokens.css`: colors, type scale, spacing, motion and z-index as CSS variables. Loaded globally.
+- `src/styles/a11y.css`: skip link, two-tone focus ring, `.visually-hidden`. Loaded globally.
+- `src/styles/base.css`: dark page, reset, grain overlay, reduced-motion rules. Loaded globally.
+- `src/ui/`: `Button`, `IconLink`, `Chip`, `Tag`, `Label`, `SectionHeader`, `MediaFrame`, `Field`, `Reveal`, `MaskLine`, `Skeleton`, `StatusMessage`. Each has a CSS Module, so styles can't leak between components.
 
-### `npm run eject`
+## Page structure
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- `src/data/portfolio.js`: one GROQ query for the whole page, plus all content cleanup (text repair, tag mapping, title fixes, project order via `PRIORITY`). `usePortfolio()` returns `{ status, data, retry }`.
+- `src/sections/`: `Nav`, `Hero`, `Ticker`, `Stats`, `FeaturedWork`, `WorkIndex`, `Services`, `Experience`, `Stack`, `Contact`, composed in `App.jsx`. Sections keep their headings visible while loading and show skeletons, empty and error states.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+To change which projects lead the page, edit `PRIORITY` in `src/data/portfolio.js`.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Motion
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- Featured work is a pinned rail: the section is as tall as the track is wide, and vertical scroll moves the track sideways (`useScroll` + `useTransform`). Tabbing to a slide's link scrolls the page to that slide.
+- The project index shows a screenshot that trails the cursor, and its rows stagger in again when the filter changes.
+- Stats count up once when they come into view; screen readers get the final number.
+- `Cursor.jsx` draws a volt dot that grows over links. The system cursor stays visible.
+- Cursor effects only run on mouse and trackpad (`pointer: fine`). With reduced motion turned on in the OS, the rail becomes a swipe row, counters show final values, the cursor preview is off, and reveals only fade.
 
-## Learn More
+Run `pnpm dev` and open http://localhost:3000/styleguide.html to see every component and state. The style guide is not part of the production build.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Framer Motion animations respect the OS reduced-motion setting through `<MotionConfig reducedMotion="user">` in `main.jsx`.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Deploy
 
-### Code Splitting
+Vercel reads `vercel.json` (Vite preset, pnpm, output in `dist/`). Set `SANITY_WRITE_TOKEN` in the Vercel project settings.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Content changes don't need a redeploy. The page queries Sanity's CDN API in the browser on every visit, so a published edit shows up once the CDN cache refreshes (usually seconds). Only `index.html` metadata and `og.png` are baked in at build time.
 
-### Analyzing the Bundle Size
+## Performance budget
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Measured with Lighthouse 12 (mobile preset) against `pnpm build && pnpm preview`. Targets: performance 95+, everything else 100.
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Fonts are self-hosted through `@fontsource`. Don't reintroduce the Google Fonts `<link>`; it blocked rendering for about 1.2 s on mobile.
+- The Sanity query uses plain `fetch` (`src/client.js`). `@sanity/client` added about 50 KB of JavaScript for that one GET request.
+- Framer Motion loads through `<LazyMotion features={domAnimation} strict>`. Use `m.div`, not `motion.div`; `strict` throws if a full `motion.*` component is added.
+- Sanity images go through `imageUrl()` / `imageSrcSet()` with a `sizes` that matches the layout. Pass `{ gray: true }` for grayscale instead of a CSS filter.
+- `usePortfolio()` commits the data inside `startTransition`. Rendering every section at once is the page's longest task, so keep it interruptible.
+- The film-grain overlay only renders above 700px wide.
