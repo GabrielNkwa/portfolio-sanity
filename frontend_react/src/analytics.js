@@ -6,6 +6,8 @@ import { inject, track as vercelTrack } from '@vercel/analytics';
   provider, change these two functions only.
 */
 export const startAnalytics = () => {
+  // A local production preview has no /_vercel/insights endpoint; loading it there only logs a 404.
+  if (import.meta.env.PROD && ['localhost', '127.0.0.1'].includes(window.location.hostname)) return;
   inject({ mode: import.meta.env.PROD ? 'production' : 'development' });
 };
 

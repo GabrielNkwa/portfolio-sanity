@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { motion, useMotionValue, useReducedMotion, useSpring } from 'framer-motion';
+import { m, useMotionValue, useReducedMotion, useSpring } from 'framer-motion';
 
 import { imageUrl } from '../data/portfolio';
 import useMediaQuery from '../hooks/useMediaQuery';
@@ -23,16 +23,16 @@ const CursorPreview = ({ work, x, y }) => {
   const shown = work || last.current;
 
   return (
-    <motion.div className={styles.preview} style={{ x, y }} aria-hidden="true">
-      <motion.div
+    <m.div className={styles.preview} style={{ x, y }} aria-hidden="true">
+      <m.div
         className={styles.previewInner}
         initial={false}
         animate={{ opacity: work ? 1 : 0, scale: work ? 1 : 0.7 }}
         transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
       >
         {shown && <img src={imageUrl(shown.image, 720)} alt="" />}
-      </motion.div>
-    </motion.div>
+      </m.div>
+    </m.div>
   );
 };
 
@@ -80,7 +80,7 @@ const WorkIndex = ({ status, works = [], onRetry, onOpen }) => {
   } else {
     body = (
       // Keyed by filter so the stagger replays when the list changes.
-      <motion.ul
+      <m.ul
         key={filter}
         className={styles.rows}
         variants={list}
@@ -104,7 +104,7 @@ const WorkIndex = ({ status, works = [], onRetry, onOpen }) => {
             </>
           );
           return (
-            <motion.li key={work.id} variants={item} onPointerEnter={() => setHovered(work)}>
+            <m.li key={work.id} variants={item} onPointerEnter={() => setHovered(work)}>
               <button
                 type="button"
                 className={styles.row}
@@ -114,10 +114,10 @@ const WorkIndex = ({ status, works = [], onRetry, onOpen }) => {
               >
                 {inner}
               </button>
-            </motion.li>
+            </m.li>
           );
         })}
-      </motion.ul>
+      </m.ul>
     );
   }
 

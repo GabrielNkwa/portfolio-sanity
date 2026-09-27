@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 
 import { track } from '../analytics';
-import { imageUrl } from '../data/portfolio';
+import { imageSrcSet, imageUrl } from '../data/portfolio';
 import { Button, Label, MediaFrame, PlaceholderBadge, Tag } from '../ui';
 import styles from './ProjectDialog.module.css';
 
@@ -57,6 +57,8 @@ const ProjectDialog = ({ work, onClose }) => {
           <MediaFrame
             className={styles.shot}
             src={imageUrl(work.image, 1200)}
+            srcSet={imageSrcSet(work.image, [480, 800, 1200])}
+            sizes="(max-width: 700px) 100vw, 640px"
             alt={`${work.title} screenshot`}
             variant={work.portrait ? 'phone' : 'screen'}
           />

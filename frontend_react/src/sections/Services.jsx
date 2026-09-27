@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { imageUrl } from '../data/portfolio';
+import { imageSrcSet, imageUrl } from '../data/portfolio';
 import { Label, Skeleton } from '../ui';
 import styles from './Services.module.css';
 
@@ -22,7 +22,16 @@ const Services = ({ status, abouts = [] }) => (
       : abouts.map((about) => (
           <div className={styles.panel} key={about.id}>
             <Label>{STACK[about.kind]}</Label>
-            {about.image && <img className={styles.art} src={imageUrl(about.image, 800)} alt="" loading="lazy" />}
+            {about.image && (
+              <img
+                className={styles.art}
+                src={imageUrl(about.image, 800)}
+                srcSet={imageSrcSet(about.image, [400, 800])}
+                sizes="(max-width: 800px) 64vw, 32vw"
+                alt=""
+                loading="lazy"
+              />
+            )}
             <div>
               <h2 className={styles.name}>{about.kind}.</h2>
               <p className={styles.desc}>{about.description}</p>

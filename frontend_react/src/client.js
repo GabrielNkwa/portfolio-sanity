@@ -1,15 +1,20 @@
-import { createClient } from '@sanity/client';
 import imageUrlBuilder from '@sanity/image-url';
 
-// Read-only client. The dataset is public, so no token belongs in the browser.
+// Read-only access to the public dataset. A plain fetch against the CDN API
+// replaces @sanity/client, which added ~50 KB of JavaScript for one GET request.
 // Writes (contact form) go through /api/contact, which holds the token server-side.
-export const client = createClient({
-  projectId: import.meta.env.VITE_SANITY_PROJECT_ID || 'rm2ky6he',
-  dataset: 'production',
-  apiVersion: '2022-02-01',
-  useCdn: true,
-});
+const projectId = import.meta.env.VITE_SANITY_PROJECT_ID || 'rm2ky6he';
+const dataset = 'production';
+const apiVersion = 'v2022-02-01';
 
-const builder = imageUrlBuilder(client);
+export const fetchQuery = async (query) => {
+  const url = `https://${projectId}.apicdn.sanity.io/${apiVersion}/data/query/${dataset}?query=${encodeURIComponent(query)}`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`Sanity query failed with ${res.status}`);
+  const body = await res.json();
+  return body.result;
+};
+
+const builder = imageUrlBuilder({ projectId, dataset });
 
 export const urlFor = (source) => builder.image(source);

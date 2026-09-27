@@ -17,7 +17,7 @@
 
   /* Type */
   --font-display: 'Anton', Impact, 'Arial Narrow', sans-serif;
-  --font-body: 'Archivo', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-body: 'Archivo Variable', 'Archivo', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
   --fs-hero: clamp(96px, min(24vw, 36dvh), 380px); /* capped by height so the CTA stays above the fold */
   --fs-display: clamp(56px, 9vw, 140px);

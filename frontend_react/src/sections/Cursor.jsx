@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { motion, useMotionValue, useReducedMotion, useSpring } from 'framer-motion';
+import { m, useMotionValue, useReducedMotion, useSpring } from 'framer-motion';
 
 import useMediaQuery from '../hooks/useMediaQuery';
 import styles from './Cursor.module.css';
@@ -45,14 +45,14 @@ const Cursor = () => {
   if (!finePointer) return null;
 
   return (
-    <motion.div className={styles.cursor} style={{ x, y }} aria-hidden="true">
-      <motion.span
+    <m.div className={styles.cursor} style={{ x, y }} aria-hidden="true">
+      <m.span
         className={styles.dot}
         initial={false}
         animate={{ scale: big ? 6 : 1, opacity: visible ? 1 : 0 }}
         transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
       />
-    </motion.div>
+    </m.div>
   );
 };
 

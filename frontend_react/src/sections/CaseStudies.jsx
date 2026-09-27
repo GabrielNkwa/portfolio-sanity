@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { track } from '../analytics';
-import { imageUrl } from '../data/portfolio';
+import { imageSrcSet, imageUrl } from '../data/portfolio';
 import { Button, Label, MediaFrame, PlaceholderBadge, Reveal, SectionHeader } from '../ui';
 import styles from './CaseStudies.module.css';
 
@@ -58,6 +58,8 @@ const CaseStudies = ({ status, works = [], onOpen }) => {
               <MediaFrame
                 className={styles.shot}
                 src={imageUrl(work.image, 900)}
+                srcSet={imageSrcSet(work.image, [480, 900, 1400])}
+                sizes="(max-width: 800px) 100vw, 50vw"
                 alt={`${work.title} screenshot`}
                 variant={work.portrait ? 'phone' : 'screen'}
                 ratio="4 / 3"

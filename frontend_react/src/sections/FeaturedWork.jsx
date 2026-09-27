@@ -1,8 +1,8 @@
 import React, { useLayoutEffect, useRef, useState } from 'react';
-import { motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from 'framer-motion';
+import { m, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 
 import { track } from '../analytics';
-import { imageUrl } from '../data/portfolio';
+import { imageSrcSet, imageUrl } from '../data/portfolio';
 import { IconLink, Label, MediaFrame, SectionHeader, Skeleton, StatusMessage } from '../ui';
 import styles from './FeaturedWork.module.css';
 
@@ -10,7 +10,14 @@ const pad = (n) => String(n).padStart(2, '0');
 
 const Slide = ({ work, index, active, onFocus }) => (
   <li className={styles.slide} onFocus={onFocus}>
-    <MediaFrame src={imageUrl(work.image, 1600)} alt={`${work.title} screenshot`} zoom active={active} />
+    <MediaFrame
+      src={imageUrl(work.image, 1200)}
+      srcSet={imageSrcSet(work.image, [480, 800, 1200, 1600])}
+      sizes="(max-width: 700px) 80vw, min(72vw, 980px)"
+      alt={`${work.title} screenshot`}
+      zoom
+      active={active}
+    />
     <div className={styles.caption}>
       <div>
         <Label>
@@ -94,20 +101,20 @@ const PinnedRail = ({ featured }) => {
             aside={<Counter current={current} total={featured.length} />}
           />
         </div>
-        <motion.ul ref={trackRef} className={styles.pinnedTrack} style={{ x }}>
+        <m.ul ref={trackRef} className={styles.pinnedTrack} style={{ x }}>
           {featured.map((work, i) => (
             <Slide key={work.id} work={work} index={i} active={i === current} onFocus={() => bringIntoView(i)} />
           ))}
-        </motion.ul>
+        </m.ul>
         <div className={styles.progress} aria-hidden="true">
-          <motion.i style={{ scaleX: scrollYProgress }} />
+          <m.i style={{ scaleX: scrollYProgress }} />
         </div>
       </div>
     </div>
   );
 };
 
-// Swipe row: used while loading, on error, and when the visitor prefers reduced motion.
+// Swipe row: used while loading, on error, and when the visitor prefers reduced m.
 const SwipeRow = ({ status, featured, onRetry }) => {
   const trackRef = useRef(null);
   const [current, setCurrent] = useState(0);

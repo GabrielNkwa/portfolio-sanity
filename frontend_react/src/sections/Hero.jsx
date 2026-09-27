@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { track } from '../analytics';
-import { BOOKING, imageUrl } from '../data/portfolio';
+import { BOOKING, imageSrcSet, imageUrl } from '../data/portfolio';
 import { Button, Label, MaskLine, PlaceholderBadge } from '../ui';
 import styles from './Hero.module.css';
 
@@ -19,9 +19,19 @@ const Mosaic = ({ works }) => {
     <div className={styles.mosaic} aria-hidden="true">
       {columns.map((col, c) => (
         <div className={styles.column} key={c}>
-          {/* Repeated so the drift loops without a gap. */}
+          {/* Repeated so the drift loops without a gap. The first copy is on screen at load,
+              so it loads eagerly (the top image is often the page's largest paint). */}
           {[...col, ...col, ...col, ...col].map((w, i) => (
-            <img key={`${w.id}-${i}`} src={imageUrl(w.image, 600)} alt="" loading={i < 2 ? 'eager' : 'lazy'} />
+            <img
+              key={`${w.id}-${i}`}
+              src={imageUrl(w.image, 600, { gray: true })}
+              srcSet={imageSrcSet(w.image, [320, 600], { gray: true })}
+              sizes="(max-width: 700px) 30vw, 28vw"
+              alt=""
+              loading={i < col.length ? 'eager' : 'lazy'}
+              fetchpriority={i === 0 ? 'high' : undefined}
+              decoding="async"
+            />
           ))}
         </div>
       ))}

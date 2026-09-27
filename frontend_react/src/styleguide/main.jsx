@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { MotionConfig } from 'framer-motion';
+import { LazyMotion, MotionConfig, domAnimation } from 'framer-motion';
 
+import '@fontsource/anton/latin-400.css';
+import '@fontsource-variable/archivo/wght.css';
 import '../styles/tokens.css';
 import '../styles/a11y.css';
 import '../styles/base.css';
@@ -189,7 +191,9 @@ const Styleguide = () => {
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <MotionConfig reducedMotion="user">
-      <Styleguide />
+      <LazyMotion features={domAnimation} strict>
+        <Styleguide />
+      </LazyMotion>
     </MotionConfig>
   </React.StrictMode>
 );

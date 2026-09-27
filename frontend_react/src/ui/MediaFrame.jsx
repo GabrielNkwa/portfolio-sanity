@@ -8,7 +8,7 @@ import styles from './MediaFrame.module.css';
   variant: 'screen' (landscape, cropped from the top) | 'phone' (portrait app screenshot in a device outline)
   zoom: slow zoom-out on hover or when `active` is set (used by the project rail)
 */
-const MediaFrame = ({ src, alt, ratio = '16 / 9', variant = 'screen', zoom = false, active = false, className }) => {
+const MediaFrame = ({ src, srcSet, sizes, alt, ratio = '16 / 9', variant = 'screen', zoom = false, active = false, className }) => {
   const [loaded, setLoaded] = useState(false);
   const [failed, setFailed] = useState(false);
 
@@ -22,6 +22,8 @@ const MediaFrame = ({ src, alt, ratio = '16 / 9', variant = 'screen', zoom = fal
       ) : (
         <img
           src={src}
+          srcSet={srcSet}
+          sizes={sizes}
           alt={alt}
           loading="lazy"
           decoding="async"

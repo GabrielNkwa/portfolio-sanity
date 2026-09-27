@@ -4,14 +4,13 @@ import styles from './Nav.module.css';
 
 const LINKS = [
   ['#work', 'Work'],
-  ['#results', 'Results'],
   ['#services', 'Services'],
   ['#contact', 'Contact'],
 ];
 
 const Nav = () => (
   <header className={styles.nav}>
-    <a className={styles.mark} href="#top" aria-label="Gabriel Nkwa, back to top">
+    <a className={styles.mark} href="#top" aria-label="GN, Gabriel Nkwa, back to top">
       GN
     </a>
     <nav aria-label="Primary">

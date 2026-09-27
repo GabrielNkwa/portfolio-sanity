@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 
 const EASE = [0.16, 1, 0.3, 1];
 
@@ -9,7 +9,7 @@ const EASE = [0.16, 1, 0.3, 1];
   which drops the transform and keeps a plain fade.
 */
 const Reveal = ({ as = 'div', delay = 0, y = 60, className, children, ...rest }) => {
-  const Comp = motion[as];
+  const Comp = m[as];
   return (
     <Comp
       className={className}
@@ -33,17 +33,17 @@ const rise = {
 };
 
 export const MaskLine = ({ delay = 0, className, children }) => (
-  <motion.span
+  <m.span
     style={{ display: 'block', overflow: 'hidden', paddingBottom: '0.02em' }}
     className={className}
     initial="hidden"
     whileInView="shown"
     viewport={{ once: true }}
   >
-    <motion.span style={{ display: 'inline-block' }} variants={rise} custom={delay}>
+    <m.span style={{ display: 'inline-block' }} variants={rise} custom={delay}>
       {children}
-    </motion.span>
-  </motion.span>
+    </m.span>
+  </m.span>
 );
 
 export default Reveal;

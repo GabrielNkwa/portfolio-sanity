@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useState } from 'react';
+import { startTransition, useCallback, useEffect, useState } from 'react';
 
-import { client, urlFor } from '../client';
+import { fetchQuery, urlFor } from '../client';
 import { fixText, normalizeTags, withProtocol, workKind } from './normalize';
 import * as placeholders from './placeholders';
 
@@ -50,7 +50,16 @@ const dimensions = (image) => {
   return match ? { width: +match[1], height: +match[2] } : null;
 };
 
-export const imageUrl = (image, width) => (image ? urlFor(image).width(width).auto('format').quality(80).url() : null);
+// gray: desaturated by Sanity's image API, so the page doesn't run a CSS filter on it every frame.
+export const imageUrl = (image, width, { gray = false } = {}) => {
+  if (!image) return null;
+  const url = urlFor(image).width(width).auto('format').quality(80);
+  return (gray ? url.saturation(-100) : url).url();
+};
+
+// srcset string so the browser picks the smallest width that covers the slot.
+export const imageSrcSet = (image, widths, options) =>
+  image ? widths.map((w) => `${imageUrl(image, w, options)} ${w}w`).join(', ') : undefined;
 
 // "DEFENCE SPACE ADMINISTRATION, ABUJA" -> "Defence Space Administration"
 const companyName = (value) => {
@@ -181,10 +190,13 @@ export const usePortfolio = () => {
   useEffect(() => {
     let ignore = false;
     setState((s) => ({ ...s, status: 'loading' }));
-    client
-      .fetch(QUERY)
+    fetchQuery(QUERY)
       .then((raw) => {
-        if (!ignore) setState({ status: 'ready', data: normalizePortfolio(raw) });
+        if (ignore) return;
+        const data = normalizePortfolio(raw);
+        // Rendering every section at once is the page's longest task. As a transition,
+        // React renders it in small slices and keeps the main thread responsive.
+        startTransition(() => setState({ status: 'ready', data }));
       })
       .catch((err) => {
         console.error('Portfolio query failed', err);
