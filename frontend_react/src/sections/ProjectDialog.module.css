@@ -1,0 +1,133 @@
+.dialog {
+  position: fixed;
+  inset: 0 0 0 auto;
+  width: min(640px, 100vw);
+  max-width: none;
+  height: 100dvh;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-left: 1px solid var(--color-line);
+  background: var(--color-bg);
+  color: var(--color-text);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.dialog::backdrop {
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+}
+
+.dialog[open] {
+  animation: slide-in 450ms var(--ease-out);
+}
+
+.dialog[open]::backdrop {
+  animation: fade-in 300ms ease;
+}
+
+@keyframes slide-in {
+  from { transform: translateX(100%); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+}
+
+.panel {
+  display: grid;
+  gap: var(--space-5);
+  padding: var(--space-5) var(--space-6) var(--space-8);
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.close {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: var(--border);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--color-text);
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color var(--dur-fast), color var(--dur-fast);
+}
+
+.close:hover {
+  background: var(--color-text);
+  color: var(--color-on-volt);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(44px, 7vw, 80px);
+  font-weight: 400;
+  line-height: 0.9;
+  text-transform: uppercase;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.metric {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2) var(--space-4);
+  padding: var(--space-5) 0;
+  border-top: var(--border);
+  border-bottom: var(--border);
+  font-weight: 600;
+}
+
+.value {
+  font-family: var(--font-display);
+  font-size: 72px;
+  line-height: 0.9;
+  color: var(--color-volt);
+}
+
+.story {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.story dt {
+  margin-bottom: 2px;
+  color: var(--color-muted);
+  font-size: var(--fs-label);
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
+.desc {
+  color: var(--color-muted);
+  font-size: var(--fs-lede);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dialog[open],
+  .dialog[open]::backdrop {
+    animation: none;
+  }
+}

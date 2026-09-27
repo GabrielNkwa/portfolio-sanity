@@ -24,6 +24,12 @@
 }
 
 .row {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
   display: grid;
   grid-template-columns: 60px 1fr auto;
   align-items: center;
@@ -49,8 +55,8 @@
     color 300ms;
 }
 
-a.row:hover .name,
-a.row:focus-visible .name {
+.row:hover .name,
+.row:focus-visible .name {
   transform: translateX(24px);
   color: var(--color-volt);
 }

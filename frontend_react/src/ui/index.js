@@ -7,3 +7,4 @@ export { default as SectionHeader } from './SectionHeader';
 export { Chip, Label, Tag } from './Tag';
 export { default as cx } from './cx';
 export { Skeleton, StatusMessage } from './Skeleton';
+export { default as PlaceholderBadge } from './PlaceholderBadge';

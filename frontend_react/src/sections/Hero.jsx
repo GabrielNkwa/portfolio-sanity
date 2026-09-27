@@ -1,7 +1,8 @@
 import React from 'react';
 
-import { imageUrl } from '../data/portfolio';
-import { Button, Label, MaskLine } from '../ui';
+import { track } from '../analytics';
+import { BOOKING, imageUrl } from '../data/portfolio';
+import { Button, Label, MaskLine, PlaceholderBadge } from '../ui';
 import styles from './Hero.module.css';
 
 // Four drifting columns of project screenshots behind the headline.
@@ -43,9 +44,16 @@ const Hero = ({ works = [] }) => (
         Web platforms and mobile apps, designed, built and launched by one engineer. Pharma-AID Africa, Valdin Energy and
         Fantasy Pro League run on my code.
       </p>
-      <Button href="#contact" arrow>
-        Start a project
-      </Button>
+      <div className={styles.ctas}>
+        {BOOKING && (
+          <Button href={BOOKING.url} external variant="ghost" onClick={() => track('booking_click', { from: 'hero' })}>
+            Book a 20-min call <PlaceholderBadge show={BOOKING.placeholder} />
+          </Button>
+        )}
+        <Button href="#contact" arrow>
+          Start a project
+        </Button>
+      </div>
     </div>
   </section>
 );

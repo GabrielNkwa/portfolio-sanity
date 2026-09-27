@@ -4,8 +4,8 @@ import styles from './Nav.module.css';
 
 const LINKS = [
   ['#work', 'Work'],
+  ['#results', 'Results'],
   ['#services', 'Services'],
-  ['#record', 'Record'],
   ['#contact', 'Contact'],
 ];
 
