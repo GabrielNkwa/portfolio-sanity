@@ -41,7 +41,7 @@ const Mosaic = ({ works }) => {
 const Hero = ({ works = [] }) => (
   <section id="top" className={styles.hero} aria-labelledby="hero-title">
     <Mosaic works={works} />
-    <Label tone="strong">Gabriel Nkwa  · Abuja</Label>
+    <Label tone="strong">Gabriel Nkwa . Project Engineer . Abuja</Label>
     <h1 id="hero-title" className={styles.title}>
       <MaskLine>Ship</MaskLine>
       <MaskLine delay={0.12} className={styles.volt}>
