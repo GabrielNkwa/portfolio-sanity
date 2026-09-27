@@ -2,10 +2,11 @@ import React from 'react';
 
 import styles from './Nav.module.css';
 
+// `phone: false` hides a link below 700px so the bar fits; Work and Contact always stay.
 const LINKS = [
-  ['#work', 'Work'],
-  ['#services', 'Services'],
-  ['#contact', 'Contact'],
+  { href: '#work', label: 'Work' },
+  { href: '#services', label: 'Services', phone: false },
+  { href: '#contact', label: 'Contact' },
 ];
 
 const Nav = () => (
@@ -15,8 +16,8 @@ const Nav = () => (
     </a>
     <nav aria-label="Primary">
       <ul className={styles.links}>
-        {LINKS.map(([href, label]) => (
-          <li key={href}>
+        {LINKS.map(({ href, label, phone = true }) => (
+          <li key={href} className={phone ? undefined : styles.wideOnly}>
             <a href={href}>{label}</a>
           </li>
         ))}

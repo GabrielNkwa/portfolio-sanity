@@ -87,6 +87,11 @@
   font-weight: 600;
 }
 
+.footer a {
+  display: inline-block;
+  padding-block: 6px; /* 24px+ tap target */
+}
+
 @media (max-width: 800px) {
   .grid {
     grid-template-columns: 1fr;

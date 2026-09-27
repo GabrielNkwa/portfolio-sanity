@@ -1,5 +1,13 @@
+/* Clips the tilted band's overhang so the page never gets wider than the viewport.
+   overflow: clip (not hidden) so it isn't a scroll container either. */
+.band {
+  overflow: hidden;
+  overflow: clip;
+  padding-block: var(--space-6);
+}
+
 .ticker {
-  margin: var(--space-6) -2vw;
+  margin-inline: -2vw;
   padding: 14px 0;
   overflow: hidden;
   background: var(--color-volt);

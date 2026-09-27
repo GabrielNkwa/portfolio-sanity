@@ -28,6 +28,8 @@
 
 .links a {
   position: relative;
+  display: inline-block;
+  padding-block: 12px; /* 24px+ tap target without changing the look */
 }
 
 .links a::after {
@@ -35,7 +37,7 @@
   position: absolute;
   left: 0;
   right: 0;
-  bottom: -4px;
+  bottom: 8px; /* 4px below the text, inside the padding */
   height: 2px;
   background: currentColor;
   transform: scaleX(0);
@@ -54,8 +56,7 @@
     gap: var(--space-5);
   }
 
-  .links li:nth-child(2),
-  .links li:nth-child(3) {
+  .wideOnly {
     display: none;
   }
 }

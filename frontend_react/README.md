@@ -69,3 +69,16 @@ Framer Motion animations respect the OS reduced-motion setting through `<MotionC
 ## Deploy
 
 Vercel reads `vercel.json` (Vite preset, pnpm, output in `dist/`). Set `SANITY_WRITE_TOKEN` in the Vercel project settings.
+
+Content changes don't need a redeploy. The page queries Sanity's CDN API in the browser on every visit, so a published edit shows up once the CDN cache refreshes (usually seconds). Only `index.html` metadata and `og.png` are baked in at build time.
+
+## Performance budget
+
+Measured with Lighthouse 12 (mobile preset) against `pnpm build && pnpm preview`. Targets: performance 95+, everything else 100.
+
+- Fonts are self-hosted through `@fontsource`. Don't reintroduce the Google Fonts `<link>`; it blocked rendering for about 1.2 s on mobile.
+- The Sanity query uses plain `fetch` (`src/client.js`). `@sanity/client` added about 50 KB of JavaScript for that one GET request.
+- Framer Motion loads through `<LazyMotion features={domAnimation} strict>`. Use `m.div`, not `motion.div`; `strict` throws if a full `motion.*` component is added.
+- Sanity images go through `imageUrl()` / `imageSrcSet()` with a `sizes` that matches the layout. Pass `{ gray: true }` for grayscale instead of a CSS filter.
+- `usePortfolio()` commits the data inside `startTransition`. Rendering every section at once is the page's longest task, so keep it interruptible.
+- The film-grain overlay only renders above 700px wide.
