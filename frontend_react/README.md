@@ -29,6 +29,17 @@ Anything prefixed `VITE_` is bundled into the browser JavaScript. Never give a s
 - `pnpm build`: production build to `dist/`
 - `pnpm preview`: serve the production build locally
 
+## Design system (Volt)
+
+- `src/styles/tokens.css`: colors, type scale, spacing, motion and z-index as CSS variables. Loaded globally.
+- `src/styles/a11y.css`: skip link, two-tone focus ring, `.visually-hidden`. Loaded globally.
+- `src/styles/base.css`: dark page, reset, grain overlay, reduced-motion rules. Used by the style guide now; the app switches to it in Phase 3.
+- `src/ui/`: `Button`, `IconLink`, `Chip`, `Tag`, `Label`, `SectionHeader`, `MediaFrame`, `Field`, `Reveal`, `MaskLine`. Each has a CSS Module, so styles can't leak between components.
+
+Run `pnpm dev` and open http://localhost:3000/styleguide.html to see every component and state. The style guide is not part of the production build.
+
+Framer Motion animations respect the OS reduced-motion setting through `<MotionConfig reducedMotion="user">` in `main.jsx`.
+
 ## Deploy
 
 Vercel reads `vercel.json` (Vite preset, pnpm, output in `dist/`). Set `SANITY_WRITE_TOKEN` in the Vercel project settings.

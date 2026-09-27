@@ -1,0 +1,38 @@
+/* Accessibility helpers that work on both the current light page and the Volt theme. */
+
+.skip-link {
+  position: fixed;
+  top: var(--space-2);
+  left: var(--space-2);
+  z-index: var(--z-skip);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg);
+  color: var(--color-volt);
+  font-family: var(--font-body);
+  font-weight: 700;
+  text-decoration: none;
+  transform: translateY(-200%);
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+.skip-link:focus {
+  transform: none;
+}
+
+/* Two-tone ring: visible on light, dark and volt backgrounds. */
+:focus-visible {
+  outline: 2px solid var(--color-bg);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px var(--color-volt);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

@@ -6,8 +6,11 @@ import './App.css';
 const App = () => {
   return (
     <div className="app">
+      <a className="skip-link" href="#main">
+        Skip to content
+      </a>
       <Navbar />
-      <main>
+      <main id="main">
         <Section id="home" animate={false}>
           <Header />
         </Section>
