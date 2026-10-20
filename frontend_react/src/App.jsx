@@ -1,17 +1,16 @@
 import React from 'react';
 
 import { usePortfolio } from './data/portfolio';
+import Archive from './sections/Archive';
 import Contact from './sections/Contact';
-import Cursor from './sections/Cursor';
-import Experience from './sections/Experience';
-import FeaturedWork from './sections/FeaturedWork';
 import Hero from './sections/Hero';
+import Kit from './sections/Kit';
 import Nav from './sections/Nav';
+import Process from './sections/Process';
+import Record from './sections/Record';
 import Services from './sections/Services';
-import Stack from './sections/Stack';
-import Stats from './sections/Stats';
-import Ticker from './sections/Ticker';
-import WorkIndex from './sections/WorkIndex';
+import Starfield from './sections/Starfield';
+import Work from './sections/Work';
 
 const App = () => {
   const { status, data, retry } = usePortfolio();
@@ -22,19 +21,20 @@ const App = () => {
       <a className="skip-link" href="#main">
         Skip to content
       </a>
-      <Cursor />
-      <Nav />
-      <main id="main">
-        <Hero works={works} />
-        <Ticker />
-        <Stats stats={data?.stats} />
-        <FeaturedWork status={status} works={works} onRetry={retry} />
-        <WorkIndex status={status} works={works} onRetry={retry} />
-        <Services status={status} abouts={data?.abouts} />
-        <Experience status={status} experiences={data?.experiences} since={data?.stats.since} onRetry={retry} />
-        <Stack skills={data?.skills} />
-        <Contact />
-      </main>
+      <Starfield />
+      <div className="page">
+        <Nav />
+        <main id="main">
+          <Hero />
+          <Work status={status} works={works} stats={data?.stats} onRetry={retry} />
+          <Archive status={status} works={works} />
+          <Services status={status} abouts={data?.abouts} />
+          <Process />
+          <Record status={status} experiences={data?.experiences} since={data?.stats.since} onRetry={retry} />
+          <Kit skills={data?.skills} />
+          <Contact />
+        </main>
+      </div>
     </>
   );
 };

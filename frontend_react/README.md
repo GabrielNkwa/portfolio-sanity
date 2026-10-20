@@ -1,73 +1,13 @@
-# Portfolio frontend
+# frontend_react
 
-React 18 single-page site built with Vite. Content comes from the public Sanity dataset `rm2ky6he/production`. The contact form posts to a Vercel function in `api/contact.js`, which writes to Sanity with a server-side token.
+The portfolio site: React 18, Vite, CSS Modules and framer-motion, with content from Sanity (`../backend_sanity`) and a Vercel function at `api/contact.js` for the contact form. The Apollo design (black ground, one amber accent, space theme) is described in `../DESIGN.md`; product context is in `../PRODUCT.md`; the audit and phases behind the redesign are in `../docs/redesign-plan.md`.
 
-## Setup
-
-Requires Node 22.12+ and pnpm.
-
-```bash
+```
 pnpm install
-cp .env.example .env
-pnpm dev
+pnpm dev      # http://localhost:3000
+pnpm build
 ```
 
-The site runs at http://localhost:3000. `pnpm dev` also serves `/api/contact` through a small Vite middleware, so the form works locally when `SANITY_WRITE_TOKEN` is set in `.env`. Submitting it writes a real `contact` document to the production dataset.
+Run the dev server on port 3000. The Sanity project only allows CORS requests from `http://localhost:3000` and the production domain, so any other origin (another port, a Vercel preview URL) gets no project data until you add it under the project's API settings at sanity.io/manage.
 
-## Environment variables
-
-| Name | Where | Purpose |
-| --- | --- | --- |
-| `VITE_SANITY_PROJECT_ID` | build | Optional. Defaults to `rm2ky6he`. |
-| `SANITY_WRITE_TOKEN` | Vercel and local `.env` | Editor token used only by `api/contact.js`. |
-
-Anything prefixed `VITE_` is bundled into the browser JavaScript. Never give a secret that prefix.
-
-## Scripts
-
-- `pnpm dev`: dev server with hot reload
-- `pnpm build`: production build to `dist/`
-- `pnpm preview`: serve the production build locally
-
-## Design system (Volt)
-
-- `src/styles/tokens.css`: colors, type scale, spacing, motion and z-index as CSS variables. Loaded globally.
-- `src/styles/a11y.css`: skip link, two-tone focus ring, `.visually-hidden`. Loaded globally.
-- `src/styles/base.css`: dark page, reset, grain overlay, reduced-motion rules. Loaded globally.
-- `src/ui/`: `Button`, `IconLink`, `Chip`, `Tag`, `Label`, `SectionHeader`, `MediaFrame`, `Field`, `Reveal`, `MaskLine`, `Skeleton`, `StatusMessage`. Each has a CSS Module, so styles can't leak between components.
-
-## Page structure
-
-- `src/data/portfolio.js`: one GROQ query for the whole page, plus all content cleanup (text repair, tag mapping, title fixes, project order via `PRIORITY`). `usePortfolio()` returns `{ status, data, retry }`.
-- `src/sections/`: `Nav`, `Hero`, `Ticker`, `Stats`, `FeaturedWork`, `WorkIndex`, `Services`, `Experience`, `Stack`, `Contact`, composed in `App.jsx`. Sections keep their headings visible while loading and show skeletons, empty and error states.
-
-To change which projects lead the page, edit `PRIORITY` in `src/data/portfolio.js`.
-
-## Motion
-
-- Featured work is a pinned rail: the section is as tall as the track is wide, and vertical scroll moves the track sideways (`useScroll` + `useTransform`). Tabbing to a slide's link scrolls the page to that slide.
-- The project index shows a screenshot that trails the cursor, and its rows stagger in again when the filter changes.
-- Stats count up once when they come into view; screen readers get the final number.
-- `Cursor.jsx` draws a volt dot that grows over links. The system cursor stays visible.
-- Cursor effects only run on mouse and trackpad (`pointer: fine`). With reduced motion turned on in the OS, the rail becomes a swipe row, counters show final values, the cursor preview is off, and reveals only fade.
-
-Run `pnpm dev` and open http://localhost:3000/styleguide.html to see every component and state. The style guide is not part of the production build.
-
-Framer Motion animations respect the OS reduced-motion setting through `<MotionConfig reducedMotion="user">` in `main.jsx`.
-
-## Deploy
-
-Vercel reads `vercel.json` (Vite preset, pnpm, output in `dist/`). Set `SANITY_WRITE_TOKEN` in the Vercel project settings.
-
-Content changes don't need a redeploy. The page queries Sanity's CDN API in the browser on every visit, so a published edit shows up once the CDN cache refreshes (usually seconds). Only `index.html` metadata and `og.png` are baked in at build time.
-
-## Performance budget
-
-Measured with Lighthouse 12 (mobile preset) against `pnpm build && pnpm preview`. Targets: performance 95+, everything else 100.
-
-- Fonts are self-hosted through `@fontsource`. Don't reintroduce the Google Fonts `<link>`; it blocked rendering for about 1.2 s on mobile.
-- The Sanity query uses plain `fetch` (`src/client.js`). `@sanity/client` added about 50 KB of JavaScript for that one GET request.
-- Framer Motion loads through `<LazyMotion features={domAnimation} strict>`. Use `m.div`, not `motion.div`; `strict` throws if a full `motion.*` component is added.
-- Sanity images go through `imageUrl()` / `imageSrcSet()` with a `sizes` that matches the layout. Pass `{ gray: true }` for grayscale instead of a CSS filter.
-- `usePortfolio()` commits the data inside `startTransition`. Rendering every section at once is the page's longest task, so keep it interruptible.
-- The film-grain overlay only renders above 700px wide.
+The contact form needs `SANITY_WRITE_TOKEN`, set as in `.env.example`.

@@ -1,63 +1,65 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import { m, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 
-import { imageSrcSet, imageUrl } from '../data/portfolio';
-import { Button, Label, MaskLine } from '../ui';
+import { Button, Words } from '../ui';
+import Horizon from './Horizon';
 import styles from './Hero.module.css';
 
-// Four drifting columns of project screenshots behind the headline.
-const Mosaic = ({ works }) => {
-  const shots = works.filter((w) => !w.portrait).slice(0, 8);
-  if (!shots.length) return <div className={styles.mosaic} aria-hidden="true" />;
+const EASE = [0.16, 1, 0.3, 1];
 
-  const columns = [0, 1, 2, 3].map((c) => {
-    const col = shots.filter((_, i) => i % 4 === c);
-    return col.length ? col : shots.slice(0, 2);
-  });
+const Hero = () => {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
+  const reduce = useReducedMotion();
+  // The planet falls away as you leave; the copy lifts and fades. Reduced motion pins all three.
+  const planetY = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : 220]);
+  const copyY = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : -90]);
+  const copyOpacity = useTransform(scrollYProgress, [0, 0.75], [1, reduce ? 1 : 0]);
 
   return (
-    <div className={styles.mosaic} aria-hidden="true">
-      {columns.map((col, c) => (
-        <div className={styles.column} key={c}>
-          {/* Repeated so the drift loops without a gap. The first copy is on screen at load,
-              so it loads eagerly (the top image is often the page's largest paint). */}
-          {[...col, ...col, ...col, ...col].map((w, i) => (
-            <img
-              key={`${w.id}-${i}`}
-              src={imageUrl(w.image, 600, { gray: true })}
-              srcSet={imageSrcSet(w.image, [320, 600], { gray: true })}
-              sizes="(max-width: 700px) 30vw, 28vw"
-              alt=""
-              loading={i < col.length ? 'eager' : 'lazy'}
-              fetchpriority={i === 0 ? 'high' : undefined}
-              decoding="async"
-            />
-          ))}
-        </div>
-      ))}
-    </div>
+    <section id="top" ref={ref} className={styles.hero} aria-labelledby="hero-title">
+      <m.div className={styles.planet} style={{ y: planetY }}>
+        <Horizon />
+      </m.div>
+
+      <m.div className={`container ${styles.copy}`} style={{ y: copyY, opacity: copyOpacity }}>
+        <h1 id="hero-title" className={styles.title}>
+          <Words text="Web and mobile products," />
+          <Words text="built and launched." delay={0.35} />
+        </h1>
+        <m.p
+          className={styles.lede}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease: EASE, delay: 1 }}
+        >
+          I'm Gabriel Nkwa, a project engineer in Abuja. I design, build and ship web platforms and mobile apps for startups,
+          from first spec to production.
+        </m.p>
+        <m.div
+          className={styles.actions}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease: EASE, delay: 1.15 }}
+        >
+          <Button href="#contact" arrow>
+            Book an intro call
+          </Button>
+          <Button href="#work" variant="link" arrow>
+            See shipped work
+          </Button>
+        </m.div>
+        <m.p
+          className={styles.proof}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1.2, ease: EASE, delay: 1.5 }}
+        >
+          In production: Pharma-AID Africa, Valdin Energy and Fantasy Pro League.
+        </m.p>
+      </m.div>
+    </section>
   );
 };
-
-const Hero = ({ works = [] }) => (
-  <section id="top" className={styles.hero} aria-labelledby="hero-title">
-    <Mosaic works={works} />
-    <Label tone="strong">Gabriel Nkwa . Project Engineer . Abuja</Label>
-    <h1 id="hero-title" className={styles.title}>
-      <MaskLine>Ship</MaskLine>
-      <MaskLine delay={0.12} className={styles.volt}>
-        it.
-      </MaskLine>
-    </h1>
-    <div className={styles.meta}>
-      <p>
-        Web platforms and mobile apps, designed, built and launched by one engineer. Pharma-AID Africa, Valdin Energy and
-        Fantasy Pro League run on my code.
-      </p>
-      <Button href="#contact" arrow>
-        Start a project
-      </Button>
-    </div>
-  </section>
-);
 
 export default Hero;

@@ -1,55 +1,74 @@
 .contact {
-  padding: 120px var(--gutter) var(--space-6);
-  background: var(--color-volt);
-  color: var(--color-on-volt);
-}
-
-/* The two-tone ring would vanish on volt; use solid black here. */
-.contact a:focus-visible,
-.contact button:focus-visible {
-  outline: 2px solid var(--color-on-volt);
-  box-shadow: none;
-}
-
-.title {
-  font-family: var(--font-display);
-  font-size: clamp(100px, 22vw, 360px);
-  font-weight: 400;
-  line-height: var(--lh-display);
-  text-transform: uppercase;
+  position: relative;
+  padding-top: var(--section-y);
+  overflow: hidden;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: 1fr 1.2fr;
-  gap: 60px;
-  margin-top: 60px;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: var(--space-8);
+  align-items: start;
 }
 
-.info p {
+.title {
+  font-size: var(--fs-h2);
+  line-height: 1.05;
+  letter-spacing: var(--track-display);
+}
+
+.sub {
   max-width: 36ch;
-  margin-bottom: var(--space-5);
-  font-weight: 500;
+  margin-top: var(--space-4);
+  color: var(--color-muted);
+  font-size: var(--fs-lede);
 }
 
-.info a {
-  display: block;
-  width: fit-content;
-  margin-bottom: 14px;
-  border-bottom: 2px solid currentColor;
-  font-size: clamp(22px, 2.6vw, 34px);
-  font-weight: 700;
-  overflow-wrap: anywhere;
+.links {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-2);
+  margin-top: var(--space-6);
+  font-size: var(--fs-lede);
+}
+
+.links a {
+  border-bottom: 1px solid var(--color-line-strong);
+  transition: color var(--dur-fast), border-color var(--dur-fast);
+}
+
+.links a:hover {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.card {
+  padding: var(--space-7);
+  border: var(--border);
+  border-radius: var(--radius-card);
+  background: rgba(12, 12, 14, 0.86);
 }
 
 .form {
   display: grid;
-  gap: 28px;
+  gap: var(--space-5);
+}
+
+.submit {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.submit p {
+  color: var(--color-muted);
+  font-size: var(--fs-small);
 }
 
 .failure {
-  color: var(--color-error-on-volt);
-  font-weight: 700;
+  color: var(--color-error);
+  font-size: var(--fs-small);
 }
 
 .failure a {
@@ -57,30 +76,52 @@
 }
 
 .sent {
-  font-size: 28px;
-  font-weight: 700;
-  max-width: 24ch;
+  display: grid;
+  gap: var(--space-2);
+  padding-block: var(--space-6);
+}
+
+.sent h3 {
+  font-size: var(--fs-h3);
+  letter-spacing: var(--track-title);
+}
+
+.sent p {
+  color: var(--color-muted);
+}
+
+.arrival {
+  position: relative;
+  height: clamp(320px, 46vh, 460px);
+  margin-top: var(--space-8);
+}
+
+.rise {
+  position: absolute;
+  inset: 0;
 }
 
 .footer {
+  position: absolute;
+  inset: auto 0 var(--space-5) 0;
   display: flex;
-  flex-wrap: wrap;
   justify-content: space-between;
-  gap: var(--space-3);
-  margin-top: 100px;
-  padding-top: 20px;
-  border-top: 2px solid var(--color-on-volt);
+  gap: var(--space-4);
+  color: var(--color-muted);
   font-size: var(--fs-small);
-  font-weight: 600;
 }
 
-.footer a {
-  display: inline-block;
-  padding-block: 6px; /* 24px+ tap target */
+.footer a:hover {
+  color: var(--color-text);
 }
 
-@media (max-width: 800px) {
+@media (max-width: 899px) {
   .grid {
     grid-template-columns: 1fr;
+    gap: var(--space-7);
+  }
+
+  .card {
+    padding: var(--space-5);
   }
 }
