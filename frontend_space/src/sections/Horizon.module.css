@@ -1,0 +1,48 @@
+.horizon {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--horizon-h, clamp(300px, 52vh, 520px));
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Sunlight scattering through the atmosphere above the limb. */
+.haze {
+  position: absolute;
+  left: 50%;
+  top: 28%;
+  width: min(120vw, 1700px);
+  height: 220px;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse 50% 100% at 50% 100%, rgba(242, 166, 90, 0.34), rgba(242, 166, 90, 0.09) 45%, transparent 72%);
+  filter: blur(10px);
+}
+
+.planet {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: 190vw;
+  aspect-ratio: 1;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background:
+    radial-gradient(ellipse 42% 9% at 50% 0%, rgba(242, 166, 90, 0.11), transparent 100%),
+    linear-gradient(180deg, #080605 0%, #020202 16%, #000 36%);
+  box-shadow:
+    0 -14px 38px -6px rgba(242, 166, 90, 0.42),
+    0 -48px 120px -24px rgba(242, 166, 90, 0.26);
+}
+
+/* The lit limb: brightest at the center, fading along the curve. */
+.planet::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, rgba(255, 238, 220, 0.98) 0, rgba(255, 190, 120, 0.55) 2px, transparent 9px);
+  -webkit-mask-image: radial-gradient(ellipse 34% 9% at 50% 0%, #000 25%, transparent 100%);
+  mask-image: radial-gradient(ellipse 34% 9% at 50% 0%, #000 25%, transparent 100%);
+}

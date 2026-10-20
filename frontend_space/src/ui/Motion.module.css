@@ -1,0 +1,12 @@
+.track {
+  position: absolute;
+  width: 1px;
+  background: var(--color-line);
+}
+
+.fill {
+  position: absolute;
+  inset: 0;
+  transform-origin: top;
+  background: linear-gradient(180deg, var(--color-accent), rgba(242, 166, 90, 0.35));
+}

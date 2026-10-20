@@ -1,0 +1,127 @@
+.contact {
+  position: relative;
+  padding-top: var(--section-y);
+  overflow: hidden;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: var(--space-8);
+  align-items: start;
+}
+
+.title {
+  font-size: var(--fs-h2);
+  line-height: 1.05;
+  letter-spacing: var(--track-display);
+}
+
+.sub {
+  max-width: 36ch;
+  margin-top: var(--space-4);
+  color: var(--color-muted);
+  font-size: var(--fs-lede);
+}
+
+.links {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-2);
+  margin-top: var(--space-6);
+  font-size: var(--fs-lede);
+}
+
+.links a {
+  border-bottom: 1px solid var(--color-line-strong);
+  transition: color var(--dur-fast), border-color var(--dur-fast);
+}
+
+.links a:hover {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.card {
+  padding: var(--space-7);
+  border: var(--border);
+  border-radius: var(--radius-card);
+  background: rgba(12, 12, 14, 0.86);
+}
+
+.form {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.submit {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.submit p {
+  color: var(--color-muted);
+  font-size: var(--fs-small);
+}
+
+.failure {
+  color: var(--color-error);
+  font-size: var(--fs-small);
+}
+
+.failure a {
+  text-decoration: underline;
+}
+
+.sent {
+  display: grid;
+  gap: var(--space-2);
+  padding-block: var(--space-6);
+}
+
+.sent h3 {
+  font-size: var(--fs-h3);
+  letter-spacing: var(--track-title);
+}
+
+.sent p {
+  color: var(--color-muted);
+}
+
+.arrival {
+  position: relative;
+  height: clamp(320px, 46vh, 460px);
+  margin-top: var(--space-8);
+}
+
+.rise {
+  position: absolute;
+  inset: 0;
+}
+
+.footer {
+  position: absolute;
+  inset: auto 0 var(--space-5) 0;
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-4);
+  color: var(--color-muted);
+  font-size: var(--fs-small);
+}
+
+.footer a:hover {
+  color: var(--color-text);
+}
+
+@media (max-width: 899px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-7);
+  }
+
+  .card {
+    padding: var(--space-5);
+  }
+}
