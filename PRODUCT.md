@@ -7,7 +7,7 @@
 web
 
 ## Stack
-Existing: Vite, React 18, CSS Modules, framer-motion, Sanity (read-only CDN query) and a Vercel function at `api/contact.js`. The redesign lives in `frontend_space/` beside the current `frontend_react/` and reuses the same data layer and contact endpoint.
+Existing: Vite, React 18, CSS Modules, framer-motion, Sanity (read-only CDN query) and a Vercel function at `api/contact.js`. The Apollo redesign replaced the earlier Volt design in `frontend_react/`, keeping the same data layer and contact endpoint.
 
 ## Users
 Startup founders and CTOs who need one senior engineer to own a web or mobile product from first spec to production. They are comparing a few engineers, have a deadline, and decide from the work shown and how clearly the offer is explained.

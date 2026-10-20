@@ -6,18 +6,9 @@ const paths = {
   arrowUpRight: 'M3 13L13 3M5 3h8v8',
 };
 
-const Icon = ({ name, label, className }) => (
-  <svg
-    className={className}
-    width="1em"
-    height="1em"
-    viewBox="0 0 16 16"
-    fill="none"
-    aria-hidden={label ? undefined : true}
-    role={label ? 'img' : undefined}
-    aria-label={label}
-  >
-    <path d={paths[name]} stroke="currentColor" strokeWidth="1.8" />
+const Icon = ({ name, className }) => (
+  <svg className={className} width="1em" height="1em" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+    <path d={paths[name]} stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 

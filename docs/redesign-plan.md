@@ -1,6 +1,6 @@
 # Portfolio redesign: audit and phases
 
-Current site: `frontend_react/` (Volt). New version: `frontend_space/` (Apollo-black, space travel). Audience and offer come from `PRODUCT.md`: startup founders and CTOs, fixed-scope project delivery.
+This plan replaced the Volt design in `frontend_react/` (last Volt commit: `f72cd60`) with the Apollo space-theme design. Audience and offer come from `PRODUCT.md`: startup founders and CTOs, fixed-scope project delivery.
 
 ## What the current site does well
 
@@ -25,7 +25,7 @@ All of this carries over unchanged.
 
 ## Phases
 
-**Phase 0, foundation (done).** `PRODUCT.md` written. `frontend_space/` scaffolded with the same data layer, contact endpoint and Vercel config, so it deploys as its own project beside the live site.
+**Phase 0, foundation (done).** `PRODUCT.md` written. The new app was built beside the old one with the same data layer, contact endpoint and Vercel config, then replaced the Volt design in `frontend_react/` so the existing Vercel project builds it.
 
 **Phase 1, positioning and structure.** New order: hero, work, services, process, record, kit, contact. The hero states the offer and the single action ("Book an intro call"). Stats move into one sentence under the work heading. The pinned rail and the duplicate index become one sequence of full-size project panels followed by a compact archive. A process section is added.
 
@@ -37,8 +37,8 @@ All of this carries over unchanged.
 
 **Phase 5, proof (needs content from Gabriel).** For each of the top three projects: the problem, Gabriel's role, what shipped, and one real result. A client quote with permission. Then a page per case study. Until this content exists the site stays honest and the slots stay empty.
 
-**Phase 6, ship.** Run Lighthouse on mobile, budget the canvas to under 4 ms a frame, add privacy-friendly analytics with a "contact form submitted" event, create a Vercel project for `frontend_space/` with a preview URL, review with Gabriel, then point the production domain at it.
+**Phase 6, ship.** Run Lighthouse on mobile, budget the canvas to under 4 ms a frame, add privacy-friendly analytics with a "contact form submitted" event, review the pull request's Vercel preview with Gabriel, then merge to ship it on the existing project.
 
 ## Copy that needs Gabriel's confirmation
 
-The process steps, the fixed-scope wording and the after-launch policy in `frontend_space/src/sections/Process.jsx` are drafted from the offer in `PRODUCT.md`. They describe how Gabriel works, so he should confirm or rewrite them before launch.
+The process steps, the fixed-scope wording and the after-launch policy in `frontend_react/src/sections/Process.jsx` are drafted from the offer in `PRODUCT.md`. They describe how Gabriel works, so he should confirm or rewrite them before launch.

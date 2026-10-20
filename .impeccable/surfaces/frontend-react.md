@@ -1,11 +1,11 @@
 ---
 version: 1
-slug: "frontend-space"
-primary_target: "frontend_space"
+slug: "frontend-react"
+primary_target: "frontend_react"
 related_targets: []
 ---
 
-# Surface brief: frontend_space home page
+# Surface brief: frontend_react home page
 
 Mode: Persuade. Visitor: a startup founder or CTO, evening, laptop, comparing a few engineers and deciding in minutes whether to book an intro call. Action: "Book an intro call" (scroll to the contact form). Proof: real Sanity projects and screenshots only. Constraints: no invented metrics, quotes or logos; process copy is a draft for Gabriel to confirm. Unresolved: calendar link, extra form fields, case-study pages (see docs/redesign-plan.md).
 
