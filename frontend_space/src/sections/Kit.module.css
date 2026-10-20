@@ -1,0 +1,39 @@
+.section {
+  display: grid;
+  gap: var(--space-5);
+  padding-block: calc(var(--section-y) * 0.5);
+  overflow: hidden;
+  border-block: var(--border);
+}
+
+.row {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+}
+
+.run {
+  display: flex;
+  width: max-content;
+  gap: clamp(40px, 6vw, 80px);
+  padding-right: clamp(40px, 6vw, 80px);
+  color: var(--color-muted);
+  font-size: clamp(1.125rem, 2vw, 1.5rem);
+  font-weight: 500;
+  letter-spacing: var(--track-display);
+  white-space: nowrap;
+  animation: run 48s linear infinite;
+}
+
+.reverse {
+  animation-direction: reverse;
+  animation-duration: 60s;
+}
+
+.row:hover .run {
+  animation-play-state: paused;
+}
+
+@keyframes run {
+  to { transform: translateX(-50%); }
+}
