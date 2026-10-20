@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { m, useScroll, useTransform } from 'framer-motion';
+import { m, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 
 import { Button, Field, Reveal } from '../ui';
 import Horizon from './Horizon';
@@ -96,7 +96,7 @@ const Contact = () => {
   const ref = useRef(null);
   // The planet rises into view as you reach the end of the page.
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end end'] });
-  const rise = useTransform(scrollYProgress, [0.45, 1], [180, 0]);
+  const rise = useTransform(scrollYProgress, [0.45, 1], [useReducedMotion() ? 0 : 180, 0]);
 
   return (
     <section id="contact" ref={ref} className={styles.contact} aria-labelledby="contact-title">

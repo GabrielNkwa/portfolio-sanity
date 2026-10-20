@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { m, useScroll, useTransform } from 'framer-motion';
+import { m, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 
 import { Button, Words } from '../ui';
 import Horizon from './Horizon';
@@ -10,10 +10,11 @@ const EASE = [0.16, 1, 0.3, 1];
 const Hero = () => {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
-  // The planet falls away as you leave; the copy lifts and fades.
-  const planetY = useTransform(scrollYProgress, [0, 1], [0, 220]);
-  const copyY = useTransform(scrollYProgress, [0, 1], [0, -90]);
-  const copyOpacity = useTransform(scrollYProgress, [0, 0.75], [1, 0]);
+  const reduce = useReducedMotion();
+  // The planet falls away as you leave; the copy lifts and fades. Reduced motion pins all three.
+  const planetY = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : 220]);
+  const copyY = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : -90]);
+  const copyOpacity = useTransform(scrollYProgress, [0, 0.75], [1, reduce ? 1 : 0]);
 
   return (
     <section id="top" ref={ref} className={styles.hero} aria-labelledby="hero-title">

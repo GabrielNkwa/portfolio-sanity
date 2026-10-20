@@ -1,5 +1,5 @@
 import React, { createRef, useMemo } from 'react';
-import { m, useScroll, useTransform } from 'framer-motion';
+import { m, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 
 import { imageSrcSet, imageUrl } from '../data/portfolio';
 import useMediaQuery from '../hooks/useMediaQuery';
@@ -61,7 +61,8 @@ const Panel = ({ work, index, last, stacked, selfRef, nextRef }) => {
 };
 
 const Work = ({ status, works = [], stats, onRetry }) => {
-  const stacked = useMediaQuery('(min-width: 900px)');
+  // Reduced motion gets a plain list: no pinning, no scaling, no sliding over.
+  const stacked = useMediaQuery('(min-width: 900px)') && !useReducedMotion();
   const featured = works.slice(0, FEATURED);
   const refs = useMemo(() => featured.map(() => createRef()), [featured.length]); // eslint-disable-line react-hooks/exhaustive-deps
 
